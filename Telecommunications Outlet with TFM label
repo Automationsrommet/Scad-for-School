@@ -1,0 +1,103 @@
+//TFM-merket datakontakt ved kanal
+
+TFMkode="' +HVGSME=521-UD.001";
+hoy=14;
+lang=12;
+brei=16.3;
+hjorner=2;
+dekselhoyde=60;
+dekselbredde=60;
+dekseldybde=20;
+
+$fn=20;
+
+
+
+
+//Ytre deksel:
+difference(){
+color("white")translate([0,-19,0])
+minkowski(){
+cube([dekselbredde-2*hjorner,dekselhoyde-2*hjorner,dekseldybde-2*hjorner],center=true);
+sphere(hjorner);
+}
+//innside av deksel:
+color("red")translate([0,-19,-5])
+minkowski(){
+cube([dekselbredde-10-2*hjorner,dekselhoyde-10-2*hjorner,dekseldybde-2*hjorner],center=true);
+sphere(hjorner);
+}
+color("green")translate([0,-19,-2])
+minkowski(){
+cube([44-2*hjorner,44-2*hjorner,19-2*hjorner],center=true);
+sphere(hjorner);
+}
+//festeklips til deksel
+for(i=[-1:2:1]){
+    for(j=[-1:2:1]){
+translate([i*21,j*15-20,2])sphere(5);
+        translate([i*8,-40,2])sphere(5);
+}
+}
+for(k=[-1:2:1]){
+  
+translate([9*k,0,6])
+    minkowski(){cube(1,center=true); sphere(1);}
+
+translate([12*k,-12,6])
+    minkowski(){cube(1,center=true); sphere(1);}
+}
+
+//kontakten:
+color("silver")translate([0,lang/2,0])cube([brei,lang,hoy],center=true);
+translate([0,-lang*3/2,0])cube([brei+8,lang*3,hoy],center=true);
+
+//teksten:
+translate([-0,-31.5-19,9])rotate([0,0,90,])linear_extrude(1)text(TFMkode,3.9);
+
+//Hull til ledning:
+translate([-0,-19.5,0])rotate([0,90,0])cylinder(50,5,2.5,center=false);
+}
+
+//Indre kontakt- og dekselholder:
+translate([58,0,0])rotate([0,180,0])difference(){
+    union(){
+    color("red")translate([0,-19,-2])
+minkowski(){
+cube([48-2*hjorner,48-2*hjorner,16-2*hjorner],center=true);
+sphere(hjorner);
+}
+//festeklips til deksel
+for(i=[-1:2:1]){
+    for(j=[-1:2:1]){
+translate([i*21,j*15-20,2])sphere(5);
+        translate([i*8,-40,2])sphere(5);
+}
+}
+for(k=[-1:2:1]){
+   
+translate([9*k,0,6])
+    minkowski(){cube(1,center=true); sphere(1);}
+
+translate([12*k,-12,6])
+    minkowski(){cube(1,center=true); sphere(1);}
+}
+}
+translate([0,-39,2])cube([brei+20,4,hoy],center=true);
+translate([0,-35,2])cube([brei+1,4,hoy],center=true);
+translate([-18,0,2])cube([8,90,hoy],center=true);
+translate([18,0,2])cube([8,90,hoy],center=true);
+translate([0,-20,2])cube([80,10,hoy-3],center=true);
+
+
+//skruehull
+for(m=[-1:2:1]){
+    for(n=[-1:2:1]){
+translate([m*18,n*15-20,2])cylinder(50,2,2,center=true);
+        
+}
+}
+
+color("silver")translate([0,lang/2,0])cube([brei,lang,hoy],center=true);
+translate([0,-lang*3/2,0])cube([brei+8,lang*3,hoy],center=true);
+}
