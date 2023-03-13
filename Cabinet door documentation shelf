@@ -1,0 +1,46 @@
+//Cabinet door documentation shelf, workingtitled "hylle" in norwegian
+
+//Command line usage in windows: 
+//Here is the command I need to type in cmd to get the .stl exported, from the folder containing the .scad:
+//C:\"Program Files"\OpenSCAD\openscad.com -o hylle.stl -D "elev=""1""" hylle.scad
+//change your output stl name and running number for your needs
+hoyde=125;
+bredde=147;
+dybde=12;
+vegg=2;
+limekant=10;
+elev=0;
+$fn=7;
+
+//support cones
+translate([82,57,-4])cylinder(14,4,0.2,center=false);
+translate([74,57,-4])cylinder(14,4,0.2,center=false);
+translate([-82,57,-4])cylinder(14,4,0.2,center=false);
+translate([-74,57,-4])cylinder(14,4,0.2,center=false);
+translate([80.5,50,-4])cylinder(12,4,0.1,center=false);
+translate([74,50,-4])cylinder(12,4,0.1,center=false);
+translate([-80.5,50,-4])cylinder(12,4,0.1,center=false);
+translate([-74,50,-4])cylinder(12,4,0.1,center=false);
+
+rotate([-90,0,0]){
+difference(){
+    union() {
+    translate([0,-3,0])cube([bredde+vegg*2,dybde+vegg,hoyde+vegg*2],center=true);
+    translate([0,-dybde/2+5.5,])minkowski(){
+    cube([bredde,1,hoyde],center=true);
+        rotate([90,0,0])cylinder(9,1,limekant,center=false);
+        }
+    }
+    translate([0,-vegg/2-3,5])cube([bredde,dybde,hoyde+10],center=true);
+    translate([0,30,66])rotate([0,90,0])cylinder(200,41,41,center=true,$fn=20);
+    
+// text labels
+color("white")translate([70,3,5])rotate([90,0,180])linear_extrude(2)text("Ekom-sentral",17);
+color("white")translate([70,3,-10])rotate([90,0,180])linear_extrude(2)text("Innbruddsalarm",11);
+color("beige")translate([70,3,-25])rotate([90,0,180])linear_extrude(2)text("Brannalarm",11);
+color("beige")translate([70,3,-40])rotate([90,0,180])linear_extrude(2)text("Adgangskontroll",11);
+color("beige")translate([70,3,-55])rotate([90,0,180])linear_extrude(2)text("VG2 Elenergi og ekom Elev",7);
+    color("red")translate([-50,3,-55])rotate([90,0,180])linear_extrude(2)text(str(elev),7);
+color("beige")translate([-70,3,-57])rotate([90,-90,180])linear_extrude(2)text("HOLARS 384",7);
+}
+}
