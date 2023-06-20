@@ -1,0 +1,32 @@
+//Parametric storage box for bundles of square forms
+x=2;
+y=16;
+tittel="Arduinokoblingsbrett";
+bredde=57;
+dybde=10;
+hoyde=85;
+bokshoyde=60;
+vegg=3;
+skrift=9;
+
+//Storage shelf box will follow the parameters given above.
+difference(){
+minkowski(){
+cube ([bredde*x+vegg*2,y*dybde+vegg*2,bokshoyde],center=true);
+    sphere(2);
+}
+for (i=[-(x-1)/2:1:(x-1)/2]){    
+for (j=[-(y-1)/2:1:(y-1)/2]){
+    
+translate([i*bredde,j*dybde,-bokshoyde/2+hoyde/2+vegg])
+    color("red")minkowski(){
+cube([bredde-2,dybde-2,hoyde],center=true);
+    sphere(2);}
+}
+}
+for(k=[-1:2:1]){
+rotate([0,0,90+k*90])color("pink")translate([-(bredde*x+vegg*2)/2+5,-(y*dybde+vegg*2.2)/2,0])rotate([90,0,0])linear_extrude(3)text(tittel,skrift);
+    
+    rotate([0,0,k*90])color("pink")translate([-(dybde*y+vegg*2)/2+5,-(x*bredde+vegg*2.2)/2,0])rotate([90,0,0])linear_extrude(3)text(tittel,skrift);
+}
+}
