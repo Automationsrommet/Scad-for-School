@@ -1,0 +1,24 @@
+//for hanging SMD-reels on wall. Should also work for old magnetic audio tape reels.
+
+//Input parameters:
+
+core=9.7;  //This is de diameter of the rod for hanging the spools on.
+outerdia=180;
+screw=2;
+thickness=9;
+margin=2;
+
+
+difference(){
+union(){
+translate([outerdia/4+core/2,outerdia/4+core/2,0])
+cube([outerdia/2+margin+core + thickness, outerdia/2+2*margin+core + thickness, thickness],center=true);
+cylinder(thickness,core,core,center=true);
+}
+translate([0,outerdia/2+thickness + core,0])
+cylinder(thickness+1, outerdia/2+core+margin-0.5,outerdia/2+core+margin-0.5,center=true,$fn=40);
+cylinder(thickness+2,core/2,core/2,center=true);
+translate([0,outerdia/2+thickness ,0])
+rotate([0,90,0])
+cylinder(outerdia*2, screw,screw,center=true,$fn=20);
+}
