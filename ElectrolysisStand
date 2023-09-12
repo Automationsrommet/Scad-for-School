@@ -1,0 +1,51 @@
+//Input parameters:
+
+core=9.9;
+outerdia=90;
+screw=2;
+thickness=9;
+margin=2;
+
+//Usage: Unncomment the part that you want
+soldertipholder();
+leg();
+translate([-12,20,0])leg();
+
+module leg(){
+difference(){
+union(){
+translate([outerdia/4+core/2,outerdia/4+core/2,0])
+cube([outerdia/2+margin+core + thickness, outerdia/2+2*margin+core + thickness, thickness],center=true);
+cylinder(thickness,core,core,center=true);
+}
+translate([0,outerdia/2+thickness + core,0])
+cylinder(thickness+1, outerdia/2+core+margin-0.5,outerdia/2+core+margin-0.5,center=true,$fn=40);
+cylinder(thickness+2,screw*1.5,screw*1.5,center=true);
+translate([0,outerdia/2+thickness ,0])
+rotate([0,90,0])
+cylinder(outerdia*2, screw,screw,center=true,$fn=20);
+
+color("red")translate([30,30,0])cube(40,center=true);
+}
+}
+module soldertipholder (){ 
+translate([-30,30,thickness/2])difference(){
+union(){
+translate([outerdia/6+core/2,outerdia/3+core*2,0])
+cube([outerdia/2-margin + thickness, outerdia/2+2*margin+core + thickness, thickness*2],center=true);
+    translate([0,core,0])
+cube([core*2, core*2, thickness*2],center=true);
+cylinder(thickness*2,core,core,center=true);
+}
+translate([0,outerdia/2+thickness + core,0])
+cylinder(thickness*2+1, outerdia/2+core/8-margin-0.5,outerdia/2+core/8-margin-0.5,center=true,$fn=40);
+cylinder(thickness*2+2,screw,screw,center=true);
+translate([0,outerdia/2+thickness+2 ,0])
+rotate([0,90,0])
+for(i=[-1.5:1:1.5]){
+ translate([0,i*10+4,45])cylinder(16, screw*2,screw,center=true,$fn=20);
+    
+}
+color("red")translate([50,10,00])rotate([0,0,45])cube(35,center=true);
+}
+}
