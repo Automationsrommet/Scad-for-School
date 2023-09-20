@@ -1,0 +1,18 @@
+//Kicad label overlay matrix for etching PCB series
+
+//Input parameters
+matrixwidth=5;
+matrixheigth=3;
+ystep=30;
+xstep=35;
+ystart=90;
+xstart=10;
+fontsize=5;
+bklassen= ["];
+aklassen=[""];
+
+rotate([0,180,0])
+for(i=[0:1:14]){
+translate([xstart+(i%matrixwidth)*ystep,ystart-((i%matrixheigth)*xstep),-1])
+projection(cut=true)linear_extrude(2)text(bklassen[i],fontsize);
+}
