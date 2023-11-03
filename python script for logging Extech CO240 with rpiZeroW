@@ -1,0 +1,21 @@
+#!/usr/bin/env python3
+import serial
+import RPi.GPIO as GPIO
+import time
+import datetime
+
+if __name__ == '__main__':
+        ser = serial.Serial('/dev/ttyUSB0', 19100, serial.EIGH>
+        ser.reset_input_buffer()
+        logging = open("uke45.txt","w")
+        while True:
+                while ser.in_waiting ==0:
+                        time.sleep(0.3)
+                if ser.in_waiting >0:
+                        line = ser.readline().decode("ISO-8859>
+                        print(line)
+                        logging.write(line)
+                        logging.write("\n")
+
+        logging.close()
+#Press Ctrl + C for exiting
