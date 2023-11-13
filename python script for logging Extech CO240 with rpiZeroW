@@ -1,21 +1,39 @@
-#!/usr/bin/env python3
 import serial
 import RPi.GPIO as GPIO
 import time
 import datetime
 
-if __name__ == '__main__':
-        ser = serial.Serial('/dev/ttyUSB0', 19100, serial.EIGH>
-        ser.reset_input_buffer()
-        logging = open("uke45.txt","w")
-        while True:
-                while ser.in_waiting ==0:
-                        time.sleep(0.3)
-                if ser.in_waiting >0:
-                        line = ser.readline().decode("ISO-8859>
-                        print(line)
-                        logging.write(line)
-                        logging.write("\n")
+starter = datetime.datetime.now()
+loggstartdag = 0
+loggstarttime = 0
+loggstartminutt = 1
+loggvarighetdag = 0
+loggvarighettime = 0
+loggvarighetminutt = 0
 
-        logging.close()
-#Press Ctrl + C for exiting
+if __name__ == '__main__':
+        ser = serial.Serial('/dev/ttyUSB0', 19100, serial.EIGHTBITS, serial.PARITY_NONE , serial.STOPBITS_ONE, timeout=1)
+        ser.reset_input_buffer()
+        logging = open("uke46.txt","w")
+
+        now = datetime.datetime.now()
+        while now.minute!=10:
+                now = datetime.datetime.now()
+                time.sleep(10)
+                print(now)
+                print("venter litt til")
+        if now.day==starter.day+loggstartdag and now.hour==starter.hour+loggstarttime and now.minute==starter.minute+loggstartminutt :
+                while True:
+                        while ser.in_waiting ==0:
+                                time.sleep(0.3)
+                        if ser.in_waiting >0:
+
+                                line = ser.readline().decode("ISO-8859-1") #.rstrip()
+                                print(line)
+                                logging.write(line)
+                                logging.write("\n")
+                                now=datetime.datetime.now()
+                                print(now)
+                                if now.month==starter.month and now.day==starter.day+loggstartdag+loggvarighetdag and now.hour==starter.hour+loggstarttime +>
+                                        logging.close()
+                                        InputInterrupt=True
