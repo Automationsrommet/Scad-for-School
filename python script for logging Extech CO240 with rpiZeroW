@@ -10,15 +10,15 @@ loggstarttime = 0
 loggstartminutt = 1
 loggvarighetdag = 0
 loggvarighettime = 0
-loggvarighetminutt = 0
+loggvarighetminutt = 3
 
 if __name__ == '__main__':
-        ser = serial.Serial('/dev/ttyUSB0', 19100, serial.EIGHTBITS, serial.PARITY_NONE , serial.STOPBITS_ONE, timeout=1)
+        ser = serial.Serial('/dev/ttyUSB0', 19200, serial.EIGHTBITS, serial.PARITY_NONE , serial.STOPBITS_ONE, timeout=1)
         ser.reset_input_buffer()
         logging = open("uke46.txt","w")
 
         now = datetime.datetime.now()
-        while now.minute!=10:
+        while now.minute!=starter.minute+loggstartminutt:
                 now = datetime.datetime.now()
                 time.sleep(10)
                 print(now)
