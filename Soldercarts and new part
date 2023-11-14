@@ -1,0 +1,115 @@
+vognbredde=400;
+vognlengde=600;
+hoydeunder=450;
+
+filterh=350;
+filterb=300;
+filterl=300;
+
+gods=5;
+
+innermuffedia=70;
+innermuffeh=40;
+senterbredde=90;
+
+//vogn();
+//filter();
+//hose();
+//solderiron();
+//wheel();
+//newpart();
+hub();
+arm();
+module hub(){intersection(){
+ color("yellow")translate([0,75,200])cube(180,center=true);
+
+newpart();}
+   
+}
+module arm(){
+ color("chocolate")translate([170,75,200])rotate([0,0,45])cube(180,center=true);   
+}
+module vogn(){
+ for (i=[-1:2:1]){
+  for(j=[-1:2:1]){
+    color("chocolate")translate([0,0,i*hoydeunder/2+i*40/2])
+    cube([vognbredde,vognlengde,40],center=true);  
+      color("black")difference(){
+          translate([i*vognbredde/2-i*40/2+i*5,j*vognlengde/2-j*40/2+j*5,0])
+          cube([40,40,hoydeunder+40+40],center=true); 
+          translate([i*vognbredde/2-i*40/2,j*vognlengde/2-j*40/2,0])
+          cube([40,40,hoydeunder+40+40+1],center=true);
+      }
+      translate([i*vognbredde/2-i*60,j*vognlengde/2-j*60,0])wheel();
+  }
+ }   
+}
+module filter(){
+    color("grey")translate([0,0,-30])cube([filterb,filterl,filterh],center=true);
+    color("yellow")translate([0,filterl/4,filterh/2-30])cylinder(innermuffeh,innermuffedia/2,innermuffedia/2,center=false);
+    color("yellow")translate([0,-filterl/4,filterh/2-30])cylinder(innermuffeh,innermuffedia/2,innermuffedia/2,center=false);
+}
+module hose(){
+    translate([0,-200-filterl/4,filterh/2])for(i=[0:5:60])rotate([i,0,0])translate([0,200,0])
+        color("silver")cylinder(innermuffeh,innermuffedia/2,innermuffedia/2,center=false);
+}
+module solderiron(){
+    for(i=[0:120:360])rotate([0,0,i])translate([70,0,hoydeunder/2+40])
+        cube([60,80,50],center=false);
+}
+module wheel(){
+    translate([0,0,-hoydeunder/2-40-50])rotate([0,-90,0]){
+        color("silver")cylinder(20,40,40,center=true);
+        color("black")translate([0,0,-15])cube([50,50,30],center=false);
+    }
+}
+module newpart(){
+    for(i=[-1:2:1]){
+        for(j=[-1:2:1]){
+            for(k=[0.001:0.05:1]){
+                difference(){
+    color("red")translate([j*vognbredde/2+innermuffedia/2*j+j*10,i*filterl/4,filterh/2-30+70-20])cylinder(innermuffeh+20,innermuffedia/2,innermuffedia/2,center=false);
+                    color("brown")translate([j*vognbredde/2+innermuffedia/2*j+j*10,i*filterl/4,filterh/2-30+70-20])cylinder(innermuffeh+20+2,innermuffedia/2-gods,innermuffedia/2-gods,center=false);
+                }
+                difference(){
+            color("orange")translate([0,filterl/4*i,filterh/2-30+3])cylinder(innermuffeh-20,innermuffedia/2+gods,innermuffedia/2+gods,center=false);
+                color("yellow")translate([0,i*filterl/4,filterh/2-30])cylinder(innermuffeh,innermuffedia/2,innermuffedia/2,center=false);
+                }
+                difference(){
+    union(){
+        difference(){
+            color("green")translate([j*vognbredde/2+innermuffedia/2*j+j*5,i*filterl/4,filterh/2-30+70-20])sphere(innermuffedia/2+gods);
+            color("cyan")translate([j*vognbredde/2+innermuffedia/2*j+j*10,i*filterl/4,filterh/2-30+70-20])sphere(innermuffedia/2);
+        }
+            translate([k*j*vognbredde/2+innermuffedia/2*j*k+j*12,filterl/4*i,filterh/2-30+innermuffedia/2+5+5*k])
+                difference(){
+                minkowski(){
+                cube([(15)*(1-k),(senterbredde)*(1-k),(innermuffedia-10)*(1-k)],center=true);
+                sphere(innermuffedia/2*k+gods);
+                }
+                 minkowski(){
+                cube([(27)*(1-k),(senterbredde)*(1-k),(innermuffedia-10)*(1-k)],center=true);
+                sphere(innermuffedia/2*k);
+                }
+                
+            }
+        }
+        color("brown")translate([j*vognbredde/2+innermuffedia/2*j+j*10,i*filterl/4,filterh/2-30+70-20])cylinder(innermuffeh+20+4,innermuffedia/2-gods,innermuffedia/2-gods,center=false);
+        color("yellow")translate([0,i*filterl/4,filterh/2-30])cylinder(innermuffeh,innermuffedia/2,innermuffedia/2,center=false);
+            }
+            for (l=[0:1:1])mirror([l,0,0])difference(){
+            union(){
+            translate([83,i*filterl/4+j*60,filterh/2-30+70-30])minkowski(){
+            cube([13,20,40],center=true);
+            rotate([0,90,0])cylinder(1,5,5,center=true);}
+            translate([110,i*filterl/4+j*60,filterh/2-30+70-30])minkowski(){
+            cube([10,20,40],center=true);
+            rotate([0,90,0])cylinder(1,5,5,center=true);}
+        }
+    
+        translate([100,i*filterl/4+j*60,filterh/2-30+70-30+10])rotate([0,90,0])cylinder(60,1,3,center=true);
+        translate([100,i*filterl/4+j*60,filterh/2-30+70-30-10])rotate([0,90,0])cylinder(60,1,3,center=true);
+}}
+        }
+    }
+}
