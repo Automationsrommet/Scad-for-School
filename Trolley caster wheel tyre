@@ -1,0 +1,14 @@
+//vognhjul
+
+ytredia=76;
+sporvidde=20;
+indredia=45;
+rund=4;
+$fn=5;
+minkowski(){
+difference(){
+cylinder(sporvidde-rund-rund,ytredia/2-rund,ytredia/2-rund,center=true,$fn=100);
+    cylinder(sporvidde+rund,indredia/2+rund,indredia/2+rund,center=true,$fn=100);
+}
+sphere(rund);
+}
