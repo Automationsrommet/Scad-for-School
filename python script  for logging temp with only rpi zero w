@@ -1,0 +1,34 @@
+#!/usr/bin/env python3
+import serial
+import RPi.GPIO as GPIO
+import time
+import datetime
+from gpiozero import CPUTemperature
+
+starter = datetime.datetime.now()
+loggstartdag = 0
+loggstarttime = 0
+loggstartminutt = 1
+loggvarighetdag = 7
+loggvarighettime = 11
+loggvarighetminutt = 55
+
+if __name__ == '__main__':
+	now = datetime.datetime.now()
+	while now.minute!=starter.minute+loggstartminutt:
+		now = datetime.datetime.now()
+		time.sleep(5)
+		print(now)
+		print("venter litt til")
+	if now.day==starter.day+loggstartdag and now.hour==starter.hour+loggstarttime and now.minute==starter.minute+loggstartminutt :
+		while True:
+			logging = open("templogg.txt","a")	
+			cpu = CPUTemperature()
+			now = datetime.datetime.now()
+			print(cpu.temperature)
+			logging.write(str(cpu.temperature) + " " + str(now) + "\n" )	
+			logging.close()
+			time.sleep(5)
+			print(now)
+			if now.month==starter.month and now.day==starter.day + loggstartdag + loggvarighetdag and now.hour==starter.hour + loggstarttime + loggvarighettime and now.minute==starter.minute + loggstartminutt + loggvarighetminutt :
+				InputInterrupt=True
