@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+
+#Usage: ssh into rpi zero W and say: "nohup sudo ./templogg.py &" and you may leave.
 import serial
 import RPi.GPIO as GPIO
 import time
