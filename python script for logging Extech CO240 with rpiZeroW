@@ -1,48 +1,36 @@
 #!/usr/bin/env python3
+#USAGE: ssh intho here and say "nohup ./co2temp.py &" and you may leave as it starts logging
 import serial
 import RPi.GPIO as GPIO
 import time
 import datetime
 from gpiozero import CPUTemperature
 
+loggername = "co2"
 starter = datetime.datetime.now()
 loggstartdag = 0
 loggstarttime = 0
 loggstartminutt = 1
-loggvarighetdag = 4
-loggvarighettime = 1
-loggvarighetminutt = 0
 
 if __name__ == '__main__':
 	ser = serial.Serial('/dev/ttyUSB0', 19200, serial.EIGHTBITS, serial.PARITY_NONE , serial.STOPBITS_ONE, timeout=1)
 	ser.reset_input_buffer()
-	#logging = open("co2uke48.txt","a")
-
+	
 	now = datetime.datetime.now()
 	while now.minute!=starter.minute+loggstartminutt:
 		now = datetime.datetime.now()
-		time.sleep(5)
+		time.sleep(3)
 		print(now)
-		print("venter litt til")
+		print("Waiting " + str(loggstartminutt) + " minutes to start logging")
 	if now.day==starter.day+loggstartdag and now.hour==starter.hour+loggstarttime and now.minute==starter.minute+loggstartminutt :
 		while True:
 			while ser.in_waiting ==0:
 				time.sleep(0.3)
 			if ser.in_waiting >0:
-				logging = open("co2uke48laben.txt","a")	
+				logging = open(loggername + "month" + str(now.month) + ".txt","a")	
 				line = ser.readline().decode("ISO-8859-1") #.rstrip()
 				cpu = CPUTemperature()
 				now = datetime.datetime.now()
-				print(line)				
-				print(cpu.temperature)
-				logging.write(line + str(cpu.temperature) + " " + str(now) + " " )	
-				#logging.write(line)
-				#logging.write("\n")
-				#logging.write(now)
-				#logging.write(str(cpu.temperature))
-				#logging.write("\n")
+				print(str(now) + " " + line + " " + str(cpu.temperature) + " degrees C at cpu core")
+				logging.write(line + " " + str(cpu.temperature) + " " + str(now) + " " )	
 				logging.close()
-				print(now)
-				if now.month==starter.month and now.day==starter.day+loggstartdag+loggvarighetdag and now.hour==starter.hour+loggstarttime + loggvarighettime and now.minute==starter.minute+loggstartminutt+loggvarighetminutt :
-					#logging.close()
-					InputInterrupt=True
