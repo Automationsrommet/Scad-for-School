@@ -1,0 +1,37 @@
+elev = "Elevnavn";
+navnx=8;
+tekst2="er ekspert";
+tekst3="på knapper";
+tekst4="og lys";
+intersection(){
+
+union(){
+linear_extrude(1)resize([35,35])projection(cut=true)
+translate([-4.5,3.5,10])surface(file = "Unor3.png", center = true, invert = true);
+translate([0,0,-1.5])cube([30,30,3],center=true);
+translate([navnx,6-3,-3])
+rotate([0,180,0])linear_extrude(1)
+    text(elev,font="Arial:style=Bold",3.3);
+translate([11,1.5-3,-3])
+rotate([0,180,0])linear_extrude(1)
+    text(tekst2,font="Arial:style=Bold",3.3);
+translate([12,-3-3,-3])
+rotate([0,180,0])linear_extrude(1)
+    text(tekst3,font="Arial:style=Bold",3.3);
+translate([7.5,-7.5-3,-3])
+rotate([0,180,0])linear_extrude(1)
+    text(tekst4,font="Arial:style=Bold",3.3);
+}
+
+
+translate([0,0,-1.4])
+color("beige")minkowski(){
+    difference(){
+    cube([25,25,1.5],center=true);
+        translate([0,10,0])cylinder(15,2.6,2.6,center=true,$fn=6);
+translate([-2,10,0])cylinder(15,2.6,2.6,center=true,$fn=6);
+translate([2,10,0])cylinder(15,2.6,2.6,center=true,$fn=6);
+}
+    sphere(1.6,$fn=8);
+}
+}
