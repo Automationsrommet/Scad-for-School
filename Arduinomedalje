@@ -1,8 +1,9 @@
 elev = "Elevnavn";
-navnx=8;
+navnx=10;
 tekst2="er ekspert";
 tekst3="på knapper";
 tekst4="og lys";
+resize([40,40,5])
 intersection(){
 
 union(){
