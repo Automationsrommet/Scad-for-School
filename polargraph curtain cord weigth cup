@@ -1,0 +1,38 @@
+for(i=[-1:2:1]){
+translate([-9,12.5,4])
+rotate([0,35,0])import("balls.stl");
+translate([-17,-4*i,0])
+rotate([0,35,0])
+color("yellow")
+translate([0,0,4])
+rotate([45,0,0])
+cube(5,cente=true);
+
+translate([-17,-4*i,0])
+rotate([0,35,0])
+color("yellow")
+translate([0,0,10])
+rotate([45,0,0])
+cube(5,cente=true);
+
+translate([-17,-4*i,0])
+rotate([0,35,0])
+color("yellow")
+translate([0,0,16])
+rotate([45,0,0])
+cube(5,cente=true);
+}
+difference(){
+    minkowski(){
+    union(){
+sphere(20,$fn=5);
+translate([0,0,-40])sphere(20,$fn=5);
+translate([0,0,-20])cylinder(40,20,20,$fn=5,center=true);
+    }
+  sphere(2);  
+}
+sphere(20,$fn=5);
+translate([0,0,-40])sphere(20,$fn=5);
+translate([0,0,-20])cylinder(40,20,20,$fn=5,center=true);
+cylinder(50,3,3,$fn=12);translate([20,0,3])sphere(20,$fn=7);    
+}
