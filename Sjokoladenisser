@@ -1,0 +1,27 @@
+int inByte = 0;         
+void setup() {
+  Serial.begin(9600);
+  while (!Serial) {
+   }
+  pinMode(13, OUTPUT);   
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    inByte = Serial.read();
+    delay(10);   
+    if (inByte==49){
+    Serial.println("Lakrislisser");
+    }
+    if (inByte==50){
+    Serial.println("Lakrismus");
+    }
+    if (inByte==51){
+    Serial.println("Rødebrus");
+    }
+    if (inByte==52){
+    Serial.println("Sjokoladenisser");
+    digitalWrite(13,HIGH);
+    }
+  }
+}
