@@ -1,0 +1,109 @@
+hoyde=150;
+bredde=90;
+dybde=280;
+tykkelse=12;
+margin=14;
+finer=4;
+plank=18;
+plankbredde=140;
+rackbredde =450;
+rackhoyde = 698;
+$fn=8;
+elevtall =["1","2","3","4","5","6","7","8","9","0","1","2","3","4","5","6"," "];
+klasse= "A"; //"A" eller "B"
+font = "Liberation Sans:style=Bold"; //["Liberation Sans", "Liberation Sans:style=Bold", "Liberation Sans:style=Italic", "Liberation Mono", "Liberation Serif"]
+
+cube_size = 60;
+letter_size = 10;
+letter_height = 8;
+
+o = cube_size / 2 - letter_height / 2;
+
+module letter(l) {
+  // Use linear_extrude() to make the letters 3D objects as they
+  // are only 2D shapes when only using text()
+  linear_extrude(height = letter_height) {
+    text(l, size = letter_size, font = font, halign = "center", valign = "center", $fn = 9);
+  }
+}
+module number(l) {
+  // Use linear_extrude() to make the letters 3D objects as they
+  // are only 2D shapes when only using text()
+  linear_extrude(height = letter_height) {
+    text(l, size = letter_size*2, font = font, halign = "center", valign = "center", $fn = 16);
+  }
+}
+
+
+for (m=[-1:2:1]){
+for (i=[-3:2:3]){
+   for (j=[-3:2:3]){ 
+              difference(){
+       union(){
+       
+       //skuffer
+translate([(dybde-margin)/2*m,(i*(bredde/2+margin) ),j*((hoyde/2)+margin)])cube([tykkelse,bredde,hoyde], center =true);
+       
+       //Handtak
+
+       translate([(dybde+3*margin)/2,(i*(bredde/2+margin) ),j*((hoyde/2)+margin)+hoyde/4])rotate([90,0,0])cylinder(bredde/2,margin,margin,center=true);
+       translate([(dybde+margin)/2,(i*(bredde/2+margin) )+bredde*m/5,j*((hoyde/2)+margin)+hoyde/4])rotate([0,90,0])cylinder(bredde/4,margin*0.7,margin*0.7,center=true);
+       translate([(dybde+3*margin)/2,(i*(bredde/2+margin) )+bredde*m/4,j*((hoyde/2)+margin)+hoyde/4])sphere(margin);
+       
+       }
+   //skuffefiner
+       translate([0,(i*(bredde/2+margin)),(j*((hoyde/2)+margin))-hoyde/2.15])
+       cube([dybde-margin,bredde-margin,finer],center=true);
+       translate([0,(i*(bredde/2+margin))+bredde/2.15*m,(j*((hoyde/2)+margin))])cube([dybde-margin,finer,hoyde-margin],center=true);
+       translate([m*dybde/2.13,(i*(bredde/2+margin)),(j*((hoyde/2)+margin))+margin])
+       cube([finer,bredde-1.5*margin,hoyde+0.5*margin],center=true);
+       
+       
+       //Hull for å spare materiale
+        translate([0,(i*(bredde/2+margin) ),(j*((hoyde/2)+margin))-margin])
+       union(){
+       cube([dybde+margin,bredde/2,hoyde/2],center=true);
+           cube([dybde+margin,bredde/2+margin,(hoyde/2)-margin],center=true);
+           translate([0,bredde/4,((hoyde/2)-margin)/2])
+           rotate([0,90,0])cylinder(dybde+margin, margin/2, margin/2, center=true);
+           translate([0,-bredde/4,((hoyde/2)-margin)/2])
+           rotate([0,90,0])cylinder(dybde+margin, margin/2, margin/2, center=true);
+           translate([0,bredde/4,-((hoyde/2)-margin)/2])
+           rotate([0,90,0])cylinder(dybde+margin, margin/2, margin/2, center=true);
+           translate([0,-bredde/4,-((hoyde/2)-margin)/2])
+           rotate([0,90,0])cylinder(dybde+margin, margin/2, margin/2, center=true);
+       }
+    translate([-dybde/2,(i*(bredde/2+margin) ),(j*((hoyde/2)+margin))])
+       cube([2*margin,bredde/2+margin,hoyde*0.75],center=true);
+   translate([0,(i*(bredde/2+margin) ),(j*((hoyde/2)+margin))+2*margin])
+       cube([dybde-margin,bredde/2+margin,hoyde],center=true);
+// skruehull
+   translate([(dybde+margin)/2,(i*(bredde/2+margin) )+bredde*m/5,j*((hoyde/2)+margin)+hoyde/4])rotate([0,90,0])cylinder(bredde/3,2,2,center=true);
+ 
+   translate([(dybde-1.25*margin)*m/2,0,j*((hoyde/2)+margin)+hoyde/4])rotate([90,0,0])cylinder(rackhoyde,2,2,center=true);
+   translate([(dybde-1.25*margin)*m/2,0,j*((hoyde/2)+margin)-hoyde/4])rotate([90,0,0])cylinder(rackhoyde,2,2,center=true);
+    //handtakavskjær
+      translate([(dybde+margin)/1.9,(i*(bredde/2+margin) ),j*((hoyde/2)+margin)+hoyde/7])rotate([90,0,0])cylinder(bredde,margin*0.8,margin*0.8,center=true);
+   }
+   //tekst
+   translate([(dybde-margin+2)/2,(i*(bredde/2+margin))-2.4*margin,j*((hoyde/2)+margin)+hoyde*0.42])rotate([90,0,90]) letter("E");
+    translate([(dybde-margin+2)/2,(i*(bredde/2+margin))-1.6*margin,j*((hoyde/2)+margin)+hoyde*0.42])rotate([90,0,90]) letter("L");
+    translate([(dybde-margin+2)/2,(i*(bredde/2+margin))-0.8*margin,j*((hoyde/2)+margin)+hoyde*0.42])rotate([90,0,90]) letter("1");
+   if (klasse =="A") translate([(dybde-margin+2)/2,(i*(bredde/2+margin))+0*margin,j*((hoyde/2)+margin)+hoyde*0.42])rotate([90,0,90]) letter("A");
+   if (klasse =="B") translate([(dybde-margin+2)/2,(i*(bredde/2+margin))+0*margin,j*((hoyde/2)+margin)+hoyde*0.42])rotate([90,0,90]) letter("B");
+   if ((((j+3)/2)*4+(i+3)/2)>=9)
+       {translate([(dybde-margin+2)/2,(i*(bredde/2+margin))+1.2*margin,j*((hoyde/2)+margin)+hoyde*0.40])rotate([90,0,90]) number("1");}
+   
+   translate([(dybde-margin)/2,(i*(bredde/2+margin))+2.2*margin,j*((hoyde/2)+margin)+hoyde*0.40])rotate([90,0,90]) number(elevtall[((j+3)/2)*4+(i+3)/2]);
+   
+}}
+ //plankerammer
+for (k=[-4:2:4]){ 
+    
+//translate([(dybde/4+3)*m,0,k*((hoyde/2)+ margin)])cube([plankbredde,rackbredde,plank], center =true);
+ for (l=[-4:2:4]){ 
+    
+//translate([(dybde/4+3)*m,(l*(bredde/2+margin) ),0])cube([plankbredde,plank,rackhoyde], center =true);
+    
+}   
+}}
