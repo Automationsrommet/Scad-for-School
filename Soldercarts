@@ -6,7 +6,7 @@ filterh=350;
 filterb=300;
 filterl=300;
 
-gods=5;
+gods=6;
 
 innermuffedia=70;
 innermuffeh=40;
@@ -21,7 +21,7 @@ senterbredde=90;
 hub();
 arm();
 module hub(){intersection(){
- color("yellow")translate([0,75,200])cube(180,center=true);
+ color("yellow")translate([0,75,200])cube([180,150,110],center=true);
 
 newpart();}
    
@@ -66,7 +66,7 @@ module wheel(){
 module newpart(){
     for(i=[-1:2:1]){
         for(j=[-1:2:1]){
-            for(k=[0.001:0.05:1]){
+            for(k=[0.001:0.04:1]){
                 difference(){
     color("red")translate([j*vognbredde/2+innermuffedia/2*j+j*10,i*filterl/4,filterh/2-30+70-20])cylinder(innermuffeh+20,innermuffedia/2,innermuffedia/2,center=false);
                     color("brown")translate([j*vognbredde/2+innermuffedia/2*j+j*10,i*filterl/4,filterh/2-30+70-20])cylinder(innermuffeh+20+2,innermuffedia/2-gods,innermuffedia/2-gods,center=false);
@@ -88,8 +88,8 @@ module newpart(){
                 sphere(innermuffedia/2*k+gods);
                 }
                  minkowski(){
-                cube([(27)*(1-k),(senterbredde)*(1-k),(innermuffedia-10)*(1-k)],center=true);
-                sphere(innermuffedia/2*k);
+                cube([(34)*(1-k),(senterbredde)*(1-k),(innermuffedia-10)*(1-k)],center=true);
+                sphere(innermuffedia/2*k+gods/2);
                 }
                 
             }
