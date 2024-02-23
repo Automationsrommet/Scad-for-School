@@ -1,0 +1,31 @@
+import serial
+import RPi.GPIO as GPIO
+import time
+import datetime
+from gpiozero import CPUTemperature
+
+loggername = "px1"
+starter = datetime.datetime.now()
+loggstartmnd = 0
+loggstartdag = 0
+loggstarttime = 0
+loggstartminutt = 0
+
+
+if __name__ == '__main__':
+	now = datetime.datetime.now()
+	while now.minute!=starter.minute+loggstartminutt:
+		now = datetime.datetime.now()
+		time.sleep(5)
+		print("Temperature logging will start in ")
+		print(now.minute)
+	if now.day==starter.day+loggstartdag and now.hour==starter.hour+loggstarttime and now.minute==starter.minute+loggstartminutt :
+		while True:
+			logging = open( loggername + "month" + str(now.month) + ".txt","a")	
+			ds18 = sed -n 2p /sys/bus/w1/devices/28-00000a04553d/w1_slave
+			tmp=ds18[12:6]
+			now = datetime.datetime.now()
+			print(tmp)
+			logging.write(str(tmp) + " Degrees C " + " The " +  str(now.day) + " day of month " +str(now.month) + " at " + str(now.hour) + " huors " + str(now.minute) + " minutes" + "\n" )
+			logging.close()
+			time.sleep(3)
