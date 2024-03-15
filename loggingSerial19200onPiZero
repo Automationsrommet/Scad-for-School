@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+#USAGE: ssh into here and say "nohup ./templcd.py &" and you may leave as it starts logging
+import serial
+import RPi.GPIO as GPIO
+import time
+import datetime
+from gpiozero import CPUTemperature
+
+loggername = "loggername"
+starter = datetime.datetime.now()
+loggstartdag = 0
+loggstarttime = 0
+loggstartminutt = 1
+
+if __name__ == '__main__':
+	ser = serial.Serial('/dev/ttyACM0', 19200, serial.EIGHTBITS, serial.PARITY_NONE , serial.STOPBITS_ONE, timeout=1)
+	ser.reset_input_buffer()
+	
+	now = datetime.datetime.now()
+	while now.minute!=starter.minute+loggstartminutt:
+		now = datetime.datetime.now()
+		time.sleep(3)
+		print(now.second)
+		print("Still waiting " + str(loggstartminutt) + " minutes to start logging")
+	if now.day==starter.day+loggstartdag and now.hour==starter.hour+loggstarttime and now.minute==starter.minute+loggstartminutt :
+		while True:
+			while ser.in_waiting ==0:
+				time.sleep(0.3)
+			if ser.in_waiting >0:
+				logging = open(loggername + "month" + str(now.month) + ".txt","a")	
+				line = ser.readline().decode("ISO-8859-1") #.rstrip()
+				#cpu = CPUTemperature()
+				now = datetime.datetime.now()
+				print(str(now) )
+				logging.write(line + "The " + str(now.day) + ".th " + str(now.hour) + ":" + str(now.minute) + ":" + str(now.second) + " " )	
+				time.sleep(2)
+				logging.close()
