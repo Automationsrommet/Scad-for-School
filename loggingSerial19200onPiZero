@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#USAGE: ssh into here and say "nohup ./templcd.py &" and you may leave as it starts logging
+#USAGE: ssh into here and say "nohup ./loggername.py &" and you may leave as it starts logging
 import serial
 import RPi.GPIO as GPIO
 import time
