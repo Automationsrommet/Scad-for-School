@@ -7,7 +7,7 @@ margan=4;
 translate([0,0,-2])union(){
 //frame();
 digits();
-translate([12.5,-14.025,0])led();
+//translate([12.5,-14.025,0])led();
 //translate([12.5,-14.025,0])dotscreen();
 translate([12.5,-14.025,0])dothopper();
 translate([12.5,-14.025,0])dotlid();
@@ -43,10 +43,12 @@ sphere(margan,$fn=6);
 module pcb(marg){
     color("brown")translate([0,-24.2,-4])
     linear_extrude(2)square([pcbwidth-marg,pcbheigth-marg],center=true);
-    translate([35,-85,10])
-        cube([35,20,20],center=true);
-    translate([-35,-85,10])
-        cube([35,20,20],center=true);
+    translate([35,-90,10])
+    rotate([15,0,0])
+        cube([35,10,20],center=true);
+    translate([-35,-90,10])
+    rotate([15,0,0])
+        cube([35,10,20],center=true);
 }
 module digits(){
     for(i=[-1:1:1])
