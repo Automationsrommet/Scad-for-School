@@ -1,5 +1,7 @@
 pcbheigth=115;
 pcbwidth=105;
+margin=6;
+margan=4;
 
 //projection(cut=true){
 translate([0,0,-2])union(){
@@ -9,13 +11,31 @@ translate([12.5,-14.025,0])led();
 //translate([12.5,-14.025,0])dotscreen();
 translate([12.5,-14.025,0])dothopper();
 translate([12.5,-14.025,0])dotlid();
+    skall();
 }
 //translate([0,24.8,0])cube(17,center=true);
-pcb();
-//}
-module pcb(){
+module skall(){
+    difference(){
+minkowski(){
+difference(){
+pcb(margin);
+translate([0,-53,0])cube([25+margin,60+margin,10],center=true);   
+}
+sphere(margan,$fn=3);
+}
+minkowski(){
+difference(){
+pcb(margan);
+translate([0,-53,0])cube([25+margan,60+margan,10],center=true);   
+}
+sphere(margan,$fn=3);
+}
+}
+
+}
+module pcb(marg){
     color("brown")translate([0,-24.2,-4])
-    linear_extrude(2)square([pcbwidth,pcbheigth],center=true);
+    linear_extrude(2)square([pcbwidth-marg,pcbheigth-marg],center=true);
 }
 module digits(){
     for(i=[-1:1:1])
