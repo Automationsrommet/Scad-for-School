@@ -11,7 +11,14 @@ translate([12.5,-14.025,0])led();
 //translate([12.5,-14.025,0])dotscreen();
 translate([12.5,-14.025,0])dothopper();
 translate([12.5,-14.025,0])dotlid();
+    difference(){
     skall();
+    translate([0,-15,-10])
+        cube([pcbwidth+20,pcbheigth+20,10],center=true);
+        translate([0,-53,-5.5])cube([25+margin,60+margin,10],center=true);
+        digitshull();
+    translate([0,-100,6])cube([200,10,60],center=true);
+    }
 }
 //translate([0,24.8,0])cube(17,center=true);
 module skall(){
@@ -21,14 +28,14 @@ difference(){
 pcb(margin);
 translate([0,-53,0])cube([25+margin,60+margin,10],center=true);   
 }
-sphere(margan,$fn=3);
+sphere(margin,$fn=6);
 }
 minkowski(){
 difference(){
 pcb(margan);
 translate([0,-53,0])cube([25+margan,60+margan,10],center=true);   
 }
-sphere(margan,$fn=3);
+sphere(margan,$fn=6);
 }
 }
 
@@ -36,10 +43,18 @@ sphere(margan,$fn=3);
 module pcb(marg){
     color("brown")translate([0,-24.2,-4])
     linear_extrude(2)square([pcbwidth-marg,pcbheigth-marg],center=true);
+    translate([35,-85,10])
+        cube([35,20,20],center=true);
+    translate([-35,-85,10])
+        cube([35,20,20],center=true);
 }
 module digits(){
     for(i=[-1:1:1])
     translate([-0.35+i*25,0,0])digit();
+}
+module digitshull(){
+    for(i=[-1:1:1])
+    translate([-0.35+i*25,0,0])digithull();
 }
 
 module digit(){
@@ -54,14 +69,28 @@ translate([0,-0.05+14.025*j,0])
 }
 }
 }
-
+module digithull(){
+    for (i=[-1:2:1]){
+    for(j=[-1:1:1]){
+        for(k=[-1:2:1]){
+translate([0,-0.05+14.025*j,0])
+        segmenthull(3.125);
+    translate([7.15*i,14.5/2*k])
+    rotate([0,0,90])segmenthull(2.6);
+}
+}
+}
+}
 module segment(avstand){
-    for(i=[-1:2:1])
-  //translate([i*avstand,0,0]) led(); 
-    //segmentscreen();
-    
+    for(i=[-1:2:1])  //translate([i*avstand,0,0]) led(); 
+    //segmentscreen();    
     segmenthopper();
     segmentlid();
+}
+module segmenthull(avstand){
+    for(i=[-1:2:1])  //translate([i*avstand,0,0]) led(); 
+    segmentscreen();    
+   
 }
 
 module led(){
@@ -79,15 +108,15 @@ module frame(){
 }
  module segmentscreen(){
      linear_extrude(8)
-  difference(){
-   minkowski(){
-    square([10,1],center=true);
-    circle(1.8,$fn=4);   
-   }
+  //difference(){
+  // minkowski(){
+   // square([10,1],center=true);
+   // circle(1.8,$fn=4);   
+  // }
      minkowski(){
-    square([10,1],center=true);
+    square([10,0.8],center=true);
     circle(1,$fn=4);   
-   }
+   //}
   }   
  }
  module segmenthopper(){
