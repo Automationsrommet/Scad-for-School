@@ -1,0 +1,34 @@
+tjukk=12;
+brei=25;
+hoy=50;
+usbb=13;
+usbt=5;
+usbh=12;
+boks=25;
+marg=2;
+difference(){
+minkowski(){
+  cube([3*brei,5*tjukk,boks-10],center=true);
+    cylinder(10,2*marg,2*marg,center=true);
+}
+for(i=[-1:1:1])
+    for(j=[-2:1:2])
+    translate([i*(marg+brei),j*(marg/2+tjukk),0])usb();
+    tekst();
+rotate([0,0,180])tekst();
+}
+module usb(){
+minkowski(){
+    translate([0,0,hoy/2])
+    cube([brei-tjukk,0.1,hoy-10],center=true);
+    cylinder(10,tjukk/2,tjukk/2,center=true);
+}
+
+translate([0,0,-usbh/2])
+cube([usbb,usbt,usbh],center=true);
+}
+
+module tekst(){
+    translate([-37,-33,-3])
+    rotate([90,0,0])linear_extrude(2)text("Mikro-SD adaptere",6.5);
+}
