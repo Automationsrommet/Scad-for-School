@@ -1,0 +1,24 @@
+heigth=40;
+width=76;
+depth=2.5;
+$fn=8;
+
+difference(){
+union(){
+cube ([width,heigth,depth],center=true);
+
+translate([0,0,10])
+sphere(5);
+
+translate([0,0,5])
+cylinder(10,5,3,center=true);
+}
+cylinder(20,2,2,center=true);
+
+for (i=[-1:2:1])
+translate([i*15,0,2])
+rotate([90,0,0])
+cylinder(50,2,2,center=true);
+translate([-35,9,0])
+linear_extrude(2)text("Brann    alarm      test ",5);
+}
