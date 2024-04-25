@@ -1,0 +1,48 @@
+tjukk=14;
+breimagnet=15;
+breikontakt=11;
+marg=2;
+brei=breimagnet+breikontakt+marg;
+hoy=50;
+gulv=2;
+boks=hoy/2;
+difference(){
+    translate([0,0,boks/2])
+boksen();
+for(i=[-1:1:1])
+    for(j=[-2:1:2])
+    translate([i*(marg+brei),j*(marg/2+tjukk),0])magnetkontakt();
+    tekst();
+rotate([0,0,180])tekst();
+}
+module boksen(){
+    minkowski(){
+  cube([3*brei,5*tjukk,boks+gulv],center=true);
+    cylinder(gulv,2*marg,2*marg,center=true);
+}
+}
+module magnetkontakt(){
+    translate([breimagnet/2+marg/2-(breimagnet-breikontakt)/2,0,0])
+    magnet();
+    translate([-breikontakt/2-marg/2-(breimagnet-breikontakt)/2,0,0])
+    kontakt();
+}
+module magnet(){
+minkowski(){
+    translate([0,0,hoy/2])
+    cube([breimagnet-marg,tjukk-marg,hoy-10],center=true);
+    cylinder(10,marg/2,marg/2,center=true);
+}
+}
+module kontakt(){
+minkowski(){
+    translate([0,0,hoy/2])
+    cube([breikontakt-marg,tjukk-marg,hoy-10],center=true);
+    cylinder(10,marg/2,marg/2,center=true);
+}
+}
+
+module tekst(){
+    translate([-43,-2.5*(marg/2+tjukk),boks/3])
+    rotate([90,0,0])linear_extrude(2)text("Magnetkontakter",8.5);
+}
