@@ -1,0 +1,73 @@
+//Patchepanelstativ
+
+dybde=110;
+hoyde=45;
+hullavstand=31.5;
+bredde=22;
+skrue=5;
+bakrehullavstand=80;
+kasselengde=76;
+gods=10;
+transisjon=dybde-kasselengde-gods;
+rund=2;
+$fn=16;
+
+
+//blue();
+//fratrekk();
+
+difference(){
+union(){
+color("blue")
+    minkowski(){
+    
+blue();
+    sphere(rund/2);
+}
+
+translate([-kasselengde/2,0,0])
+minkowski(){
+cube([kasselengde-rund,bredde-rund*2,hoyde-rund*2],center=true);
+    rotate([0,-90,
+0])    cylinder(rund,rund,rund,center=true);
+}
+}
+for(i=[-1:2:1]){
+    
+    translate([0,0,i*hullavstand/2])
+    rotate([0,90,0])
+cylinder(300,skrue/2,skrue/2,center=true);
+    translate([0,0,i*bakrehullavstand/2])
+    rotate([0,90,0])
+cylinder(300,skrue/2,skrue/2,center=true);
+    
+    translate([-15,-10,i*hullavstand/2])
+cube([10,30,10],center=true);
+    translate([-kasselengde-transisjon/2,0,i*bakrehullavstand/2])
+    rotate([0,90,0])
+cylinder(30,0,skrue*2,center=true);
+}
+}
+
+module blue(){
+    
+    difference(){
+        translate([-kasselengde+rund/2-transisjon/2,0,0])
+cube([transisjon-rund,bredde-rund,bakrehullavstand+bredde-rund],center=true);
+      
+     fratrekk(); 
+        
+    }
+}
+module fratrekk(){
+    for(j=[-1:2:1]){
+     translate([-kasselengde,0,j*(hoyde+bredde)/2])
+    rotate([90,0,0])
+cylinder(50,bredde/2+rund/2,bredde/2+rund/2,center=true);
+    translate([-kasselengde,0,j*(hoyde+bredde*2)/2])
+    rotate([90,0,0])
+cube([bredde+rund,bredde+rund,bredde+rund],center=true);
+        translate([-kasselengde-transisjon/2,0,j*bakrehullavstand/2])
+    rotate([0,90,0])
+cylinder(30,0,skrue*2,center=true);    
+        }}
