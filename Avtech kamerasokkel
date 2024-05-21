@@ -1,0 +1,66 @@
+skruediagonal=70;
+tvers=98;
+langs=106;
+vegg=2;
+iso8=100;
+rund=20;
+hoyde=90;
+$fn=20;
+
+flate();
+rom();
+bunnplate();
+
+module bunnplate(){
+    linear_extrude(4)
+    difference(){
+    minkowski(){
+       
+        square([iso8+30,iso8+30],center=true);
+        circle(rund-10);
+    }
+    for(i=[-1:2:1])
+        for(j=[-1:2:1])
+            translate([i*(iso8/2+5+rund/2),j*(iso8/2+5+rund/2)])
+        circle(5/2);
+        minkowski(){
+    
+    square([(iso8-vegg*2),(iso8-vegg*2)],center=true);
+        circle(rund);
+    }
+}
+}
+module rom(){
+    for(i=[0:1:hoyde])
+        translate([0,0,i])
+    linear_extrude(1)
+difference(){
+    minkowski(){
+        resize([langs*i/hoyde,tvers*i/hoyde])
+    circle(tvers/2);
+        square([iso8*(hoyde-i)/hoyde,iso8*(hoyde-i)/hoyde],center=true);
+        circle(rund*(hoyde-i)/hoyde);
+    }
+    
+    minkowski(){
+    resize([(langs-vegg*2)*i/hoyde,(tvers-vegg*2)*i/hoyde])
+    circle(tvers/2);
+    square([(iso8-vegg*2)*(hoyde-i)/hoyde,(iso8-vegg*2)*(hoyde-i)/hoyde],center=true);
+        circle(rund*(hoyde-i)/hoyde);
+    }
+}
+}
+module flate(){
+    translate([0,0,hoyde])
+    linear_extrude(4)
+    difference(){
+    resize([langs,tvers])
+    circle(tvers/2);
+        translate([5,0,0])
+    for(i=[-1:2:1])
+        for(j=[-1:2:1])
+            translate([i*skruediagonal/sqrt(2)/2,j*skruediagonal/sqrt(2)/2,])
+        circle(5/2);
+        circle(20);
+    }
+}
