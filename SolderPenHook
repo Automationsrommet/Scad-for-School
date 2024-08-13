@@ -1,0 +1,45 @@
+flate=40;
+rund=1;
+radius=25;
+bredde=15;
+tykkelse=9;
+segmenter=12;
+opplosing=360/segmenter;
+
+difference(){  
+minkowski(){    
+union(){
+  translate([-radius,-flate,bredde/2])
+  rotate([0,-90,0])
+  cylinder(tykkelse,bredde/2,bredde/2,center=true,$fn=segmenter);
+linear_extrude(bredde)sving();
+linear_extrude(bredde)plank();
+}
+rotate([45,45,0])cube(rund,center=true);
+}
+hull();
+}
+
+
+module hull() {
+  translate([-radius,-flate,bredde/2])
+  rotate([0,-90,0])
+  cylinder(tykkelse+2*rund,4,2,center=true);  
+}
+module plank(){
+    polygon([
+    for(j=[-1:2:1])
+    for(i=[0:flate:flate])
+        [(-radius+-j*tykkelse/2),(-i)]
+    ],[[0,1,3,2]]);
+  
+}
+module sving(){
+  polygon([
+    for(j=[-1:2:1])
+    for(i=[0:opplosing:180])       
+    [(radius+j*tykkelse/2)*cos(i),(radius+j*tykkelse/2)*sin(i)]
+    ]);  
+    translate([radius,0])
+    circle(tykkelse/2,$fn=segmenter);
+}
