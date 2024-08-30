@@ -1,0 +1,21 @@
+$fn=100;
+lengde=40;
+bredde=30;
+
+fler(3,2);
+
+module fler(x,y){
+    for(i=[-(x-1)/2:1:(x-1)/2]){
+        for(j=[-(y-1)/2:1:(y-1)/2]){
+            translate([i*lengde,j
+        *bredde,0])etkort();
+}}}
+module etkort(){
+linear_extrude(1)
+difference(){
+color("red")square([lengde,bredde],center=true);
+translate([-155,83,0])
+import(
+file = "Tempkort-F_Cu.dxf");
+}
+}
