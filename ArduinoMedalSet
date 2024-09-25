@@ -1,0 +1,74 @@
+aklasse=[Comma seperated student name strings here];
+bklasse=[Comma seperated student name strings here];
+for(k=[0:1:15]){
+//echo(aklasse);
+//echo(bklasse);
+}
+tekst2="er ekspert";
+tekst3="på knapper";
+tekst4="og lys";
+dia=25;
+teksthoyde=6;
+medalje(5,3);
+module medalje(frambak,oppned){
+    for(i=[1:1:(frambak)])
+            translate([i*dia*2.2,1*dia*2.2,0])
+difference(){
+    plata();
+    bilde();
+    tekster(i-1);
+}
+for(j=[1:1:(frambak)])
+            translate([j*dia*2.2,2*dia*2.2,0])
+difference(){
+    plata();
+    bilde();
+    tekster(j-1+frambak);
+}
+for(k=[1:1:(frambak)])
+            translate([k*dia*2.2,3*dia*2.2,0])
+difference(){
+    plata();
+    bilde();
+    tekster(k-1+frambak*2);
+}
+}
+module elev(tall);
+module bilde(){
+union(){
+linear_extrude(1)resize([52,54])
+    projection(cut=true)
+translate([-2.5,2.5,10])surface(file = "Unor3.png", center = true, invert = true);}}
+
+  module tekster(tallet){  
+//translate([len(elev())*teksthoyde*0.36,(2)*teksthoyde*0.8,-2])
+      translate([len(str(bklasse[tallet]))*teksthoyde*0.36,(2)*teksthoyde*0.8,-2])
+rotate([0,180,0])linear_extrude(1)
+    text(str(bklasse[tallet]),font="Arial:style=Bold",teksthoyde);
+translate([len(tekst2)*teksthoyde*0.36,(0.2)*teksthoyde*0.8,-2])
+rotate([0,180,0])linear_extrude(1)
+    text(tekst2,font="Arial:style=Bold",teksthoyde);
+translate([len(tekst3)*teksthoyde*0.36,-1.7*teksthoyde*0.8,-2])
+rotate([0,180,0])linear_extrude(1)
+    text(tekst3,font="Arial:style=Bold",teksthoyde);
+translate([len(tekst4)*teksthoyde*0.36,(-3.6)*teksthoyde*0.8,-2])
+rotate([0,180,0])linear_extrude(1)
+    text(tekst4,font="Arial:style=Bold",teksthoyde);
+}
+
+module plata(){
+translate([0,0,-1.4])
+color("beige")
+minkowski(){
+        linear_extrude(1)
+difference(){
+    polygon([
+        for(i=[0:15:359])
+        [dia*sin(i),dia*cos(i)]        
+        ]);       
+        translate([0,20])circle(2.9,$fn=6);
+translate([-2,20])circle(2.9,$fn=6);
+translate([2,20])circle(2.9,$fn=6);
+}
+    sphere(1.5,$fn=8);
+}}
