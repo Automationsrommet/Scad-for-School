@@ -1,0 +1,44 @@
+Vi begrenser oss til knapper på inngangene og LED på utgangene.
+Vi kobler opp kretsen med tre knapper og tre lys så har vi den til alle 10 kretsene. Læreren godkjenner etter hvert underveis.
+Løsningnene baseres på Arduino-eksempelet StateChangeDetection.
+
+
+Oppdrag 1:
+
+SPDT (single pole double throw). En knapp styrer et lys som en kulepenn.
+
+Oppdrag 2:
+
+1 knapp styrer to lys og veksler mellom dem. Et lys er til enhvert tid på.
+
+Oppdrag 3:
+
+1 knapp styrer 2 lys og veksler mellom dem med pause mellom hvert lys. Lyset er av til knappen trykkes igjen og neste lys slås på.
+
+Oppdrag 4:
+
+Irriterende lampe. 1 knapp styrer 1 lys. 3 trykk for av, 3 trykk for på.
+
+Oppdrag 5:
+
+1 knapp styrer 3 lys, lysene teller binært fra 0 til 7 etter hvert som man trykker på knappen.
+
+Oppdrag 6:
+
+1 knapp styrer 3 lys og veksler mellom dem. LEDene lyser i rekkefølgen 1, 2, 3, 1, 2, 3.
+
+Oppdrag 7: 
+
+2 knapper med 2 lys. SPST (single pole single throw) (impulsbryter) med to separate lys.
+
+Oppdrag 8: 
+
+2 knapper styrer 3 lys. Lysene teller opp og ned binært fra 0 til 7. En knapp for opp, en knapp for ned.
+
+Oppdrag 9:
+
+Endevender. 2 knapper styrer et lys. Begge knappene skrur lyset av eller på like godt.
+
+Oppdrag 10:
+
+3 knapper styrer to lys. Lysene veksler med pause. Alle tre knappene styrer lysene like godt. Knappene styrer lengden på pausene.
