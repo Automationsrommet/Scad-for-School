@@ -1,0 +1,164 @@
+hullavstand=24;
+totalbredde=25;
+totalhoyde=59-2.5;
+lagerbredde=8;
+lagerhoyde=6.5;
+spindellagerdia=22;
+spindellagerhull=8;
+spindellagerhoyde=7;
+festeplateh=59;
+festeplateb=82;
+bitlengde=30;
+bitdia=3;
+vegg=8;
+$fn=40;
+
+spindelholder();
+//spindel();
+//bitholder();
+
+//motorogspindelholder();
+//motor();
+motorsokkel();
+
+module motorsokkel(){
+    color("green")
+    difference(){
+    translate([15,-35+10,25+12]){
+    translate([0,0,-totalhoyde/2-lagerhoyde/2+17/2])
+        cylinder(lagerhoyde+17,lagerbredde*2,lagerbredde*2,center=true);
+        translate([7.9,0,-totalhoyde/2-lagerhoyde/2+17/2])
+        cube([lagerbredde*2,40,lagerhoyde+17],center=true);
+        translate([7.9+6,0,-totalhoyde/2-lagerhoyde/2+17/2+29])
+        cube([lagerbredde/4,40,32],center=true);
+    }
+        translate([15,-35+10,25+18])
+        for(i=[-1:2:1])
+            for(j=[-1:2:1]){
+                translate([0,i*hullavstand/2,j*hullavstand/2])
+            rotate([0,90,0])
+            cylinder(40,2,2,center=true);
+            translate([-1,i*hullavstand/2,j*hullavstand/2])
+            rotate([0,90,0])
+            rotate([0,0,30])
+            cylinder(30 ,4.1,4.1,center=true,$fn=6);
+            }
+            translate([15,-35+10,25+18])
+    for(k=[-1:2:1]){
+                translate([-0,k*16,-30])
+            rotate([0,90,0])
+            cylinder(40,2,2,center=true);
+            translate([-10,k*16,-30])
+            rotate([0,90,0])
+            cylinder(20 ,4.1,4.1,center=true,$fn=6);
+            }
+            motor();
+        
+    }
+}
+
+module motor(){
+    color("yellow")
+    translate([15,-35+10,25+12]){
+    cylinder(totalhoyde,totalbredde/2,totalbredde/2,center=true);
+        translate([0,0,-totalhoyde/2-lagerhoyde/2])
+        cylinder(lagerhoyde,lagerbredde/2,lagerbredde/2,center=true);
+        translate([0,0,-totalhoyde/2-lagerhoyde])
+        cylinder(20,2,2,center=true);
+        translate([0,0,-totalhoyde/2-lagerhoyde-5])
+        minkowski(){
+        cylinder(8,26,26,center=true);
+sphere(1,$fn=5);
+        }
+    }
+}
+module motorogspindelholder(){
+difference(){
+    union(){
+ translate([-15,-28,15+5])
+ cube([2*vegg,festeplateb,festeplateh+10],center=true);
+   translate([totalbredde/2-0.5,-65,15+10])
+ cube([totalbredde+10+3,vegg,festeplateh+20],center=true);
+        translate([35,-28-10+2,15+18+5])
+ cube([vegg,festeplateb-16,festeplateh+10],center=true);
+    }
+    translate([20,-35+10,25+18])
+        for(i=[-1:2:1])
+            for(j=[-1:2:1]){
+                translate([0,i*hullavstand/2,j*hullavstand/2])
+            rotate([0,90,0])
+            cylinder(40,2.1,2.1,center=true);
+                translate([18,i*hullavstand/2,j*hullavstand/2])
+            rotate([0,90,0])
+                cylinder(4,4,6,center=true); 
+            }
+     spindelholder();
+            motor();
+    translate([-14,-14,0])
+  rotate([90,0,0])
+  cylinder(54,4,0,center=true); 
+            translate([0,-30,104])rotate([0,-20,0])cube(100,center=true);
+            
+            translate([15,-35+10,25+18])
+    for(k=[-1:2:1]){
+                translate([20,k*16,-30])
+            rotate([0,90,0])
+            cylinder(60,2.1,2.1,center=true);
+            translate([23,k*16,-30])
+            rotate([0,90,0])
+            cylinder(4,4,6,center=true);
+            }
+            
+            translate([-10,-35+10,16])
+        for(l=[-1:2:1])
+            for(m=[-1:2:1]){
+                translate([0,l*hullavstand,m*hullavstand])
+            rotate([0,90,0])
+            cylinder(40,2.1,2.1,center=true);
+                translate([2,l*hullavstand,m*hullavstand])
+            rotate([0,90,0])
+            cylinder(4,4,6,center=true);
+            }
+            translate([-10,-35+10,16])
+            translate([-8,hullavstand,-hullavstand])
+            rotate([0,90,0])
+            cylinder(4,4,6,center=true);
+            translate([totalbredde+10+3-vegg,-65,15-totalhoyde/2])rotate([90,0,0])cylinder(vegg,17,17,center=true);
+    }
+
+}
+module spindelholder(){
+    difference(){
+    union(){
+ translate([-12,0,0])
+ cube([vegg+2,28,30],center=true);
+   translate([0,10,0])
+ cube([28,vegg,30],center=true);
+            }
+     translate([-14,0,0])
+  rotate([90,0,0])
+  cylinder(40,2,2,center=true);
+            spindel(); 
+    }
+    translate([-17,0,-12])
+  rotate([90,0,0])
+  cylinder(28,3,3,center=true);
+   translate([-17,0,12])
+  rotate([90,0,0])
+  cylinder(28,3,3,center=true);
+}
+module bitholder(){
+    difference(){
+        cylinder(26,5,5,center=true);
+        translate([0,0,-10-spindellagerhoyde/2-10])
+        cylinder(bitlengde,bitdia/2,bitdia/2,center=false,$fn=30);
+        spindel();
+        
+    }
+}
+module spindel(){
+    for (i=[-1:2:1])translate([0,0,i*10])difference(){
+        cylinder(spindellagerhoyde,spindellagerdia/2,spindellagerdia/2,center=true,$fn=30);
+                cylinder(spindellagerhoyde+1,spindellagerhull/2,spindellagerhull/2,center=true,$fn=30);
+    }
+}
