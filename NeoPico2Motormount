@@ -13,13 +13,13 @@ bitdia=3;
 vegg=8;
 $fn=40;
 
-spindelholder();
+//spindelholder();
 //spindel();
 //bitholder();
 
-//motorogspindelholder();
+motorogspindelholder();
 //motor();
-motorsokkel();
+//motorsokkel();
 
 module motorsokkel(){
     color("green")
@@ -88,18 +88,32 @@ difference(){
                 translate([0,i*hullavstand/2,j*hullavstand/2])
             rotate([0,90,0])
             cylinder(40,2.1,2.1,center=true);
-                translate([18,i*hullavstand/2,j*hullavstand/2])
+                translate([17,i*hullavstand/2,j*hullavstand/2])
             rotate([0,90,0])
                 cylinder(4,4,6,center=true); 
             }
      spindelholder();
             motor();
-    translate([-14,-14,0])
+    translate([-14,-10,0])
   rotate([90,0,0])
-  cylinder(54,4,0,center=true); 
+  cylinder(50,7,0,center=true); 
+            
+            translate([-14,-14,0])
+  rotate([90,0,0])
+  cylinder(54,2.1,2.1,center=true);
+           
+           translate([-14,-32,0])
+  rotate([90,0,0])
+            rotate([0,0,00])
+            cylinder(5 ,4.1,4.1,center=true,$fn=6); 
+                       translate([-9.8,-32,0])
+  rotate([90,0,0])
+            rotate([0,0,00])
+            cylinder(5 ,4.1,4.1,center=true,$fn=6); 
+            
             translate([0,-30,104])rotate([0,-20,0])cube(100,center=true);
             
-            translate([15,-35+10,25+18])
+            translate([14,-35+10,25+18])
     for(k=[-1:2:1]){
                 translate([20,k*16,-30])
             rotate([0,90,0])
@@ -109,20 +123,24 @@ difference(){
             cylinder(4,4,6,center=true);
             }
             
-            translate([-10,-35+10,16])
+            translate([-10,-35+7.5,16])
         for(l=[-1:2:1])
             for(m=[-1:2:1]){
                 translate([0,l*hullavstand,m*hullavstand])
             rotate([0,90,0])
             cylinder(40,2.1,2.1,center=true);
-                translate([2,l*hullavstand,m*hullavstand])
+                translate([1,l*hullavstand,m*hullavstand])
             rotate([0,90,0])
             cylinder(4,4,6,center=true);
             }
-            translate([-10,-35+10,16])
+            translate([-10,-35+7.5,16])
             translate([-8,hullavstand,-hullavstand])
             rotate([0,90,0])
             cylinder(4,4,6,center=true);
+            
+            translate([-20,-35+7.5,16])
+            rotate([0,90,0])
+            cylinder(6,18,14,center=true);
             translate([totalbredde+10+3-vegg,-65,15-totalhoyde/2])rotate([90,0,0])cylinder(vegg,17,17,center=true);
     }
 
@@ -137,15 +155,19 @@ module spindelholder(){
             }
      translate([-14,0,0])
   rotate([90,0,0])
-  cylinder(40,2,2,center=true);
+  cylinder(40,2.1,2.1,center=true);
+            spindel();
+              translate([-14,12,0])
+  rotate([90,0,0])
+  cylinder(4,6,4,center=true);
             spindel(); 
     }
-    translate([-17,0,-12])
+    translate([-17,0,-13])
   rotate([90,0,0])
-  cylinder(28,3,3,center=true);
-   translate([-17,0,12])
+  cylinder(28,2,2,center=true);
+   translate([-17,0,13])
   rotate([90,0,0])
-  cylinder(28,3,3,center=true);
+  cylinder(28,2,2,center=true);
 }
 module bitholder(){
     difference(){
