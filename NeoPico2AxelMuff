@@ -1,0 +1,79 @@
+shaftlength=10;
+shaftdia=5.4;
+m8margin=0.6;
+m4margin=0.2;
+m8dia=7.85;
+m8pitch=1.25;
+m8len=10;
+m4head=4;
+m4headdia=7;
+m4dia=3.95;
+m4pitch=3.8/5;
+m4len=8.6-m4head;
+detail=30;
+$fn=detail;
+
+//outer();
+//shaft();
+//m8(false);
+//m4();
+muff();
+//inner(); 
+
+  module inner(){
+    shaft(false);
+      translate([0,0,shaftlength])m8(false);
+    translate([-m4len-2,0,shaftlength/2])
+      rotate([0,90,0])m4();
+    translate([m4len+2,0,shaftlength+m8len/2])
+      rotate([0,-90,0])m4();  
+  }
+module muff(){
+    difference(){
+      outer();
+      inner();  
+    }
+}
+module outer(){translate([0,0,1])
+    minkowski(){
+    cylinder(shaftlength+10-2,10-1,10-1,center=false);
+        sphere(1,$fn=5);
+    }
+}
+module shaft(cut){
+    difference(){
+    cylinder(shaftlength,shaftdia/2,shaftdia/2,center=false,$fn=50);if(cut){translate([-shaftdia*3/4,0,shaftlength/2])cube(5,center=true);
+    }
+}
+}
+
+module m8(cutout){
+    color("silver")
+    difference(){
+    rotate([0,0,90])cylinder(m8len,(m8dia+m8margin)/2,(m8dia+m8margin)/2,center=false);
+    for(i=[-m8pitch/3*detail:1:m8len/m8pitch*detail+m8pitch/3*detail])
+    translate([0,0,i*m8pitch/detail])
+    rotate([0,90,360/detail*i])
+    translate([0,-(m8dia+m8margin*2)/2,-((m8dia)*PI/detail)/2])
+    rotate([0,-3.68,0])
+    linear_extrude((m8dia+m8margin)*PI/detail)polygon([[m8pitch/2,0],[0,m8pitch],[-m8pitch/2,0]]);
+    if(cutout){
+        translate([m8dia/2,0,m8len/2])cube(5,center=true);
+    }
+}
+}
+module m4(){
+    color("silver")
+    difference(){
+    rotate([0,0,90])cylinder(m4len,(m4dia+m4margin)/2,(m4dia+m4margin)/2,center=false);
+    for(i=[-m4pitch/3*detail:1:m4len/m4pitch*detail+m4pitch/3*detail])
+    translate([0,0,i*m4pitch/detail])
+    rotate([0,90,360/detail*i])
+    translate([0,-(m4dia+m4margin*2)/2,-(m4dia*PI/detail)/2])
+    rotate([0,-5,0])
+    linear_extrude((m4dia+m4margin)*PI/detail)polygon([[m4pitch/2,0],[0,m4pitch],[-m4pitch/2,0]]);
+    }
+    color("silver")
+    translate([0,0,-m4head])
+    cylinder(m4head,m4headdia/2+m4margin,m4headdia/2+m4margin,center=false);
+}
