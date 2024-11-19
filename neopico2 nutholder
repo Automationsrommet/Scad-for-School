@@ -1,0 +1,23 @@
+difference(){
+minkowski(){
+holes(5);
+cylinder(3,3,1,$fn=12);
+}
+translate([0,0,2])
+holes(6);
+
+hull();
+}
+module holes(hoy){
+for (i=[-1:2:1])
+    translate([i*9,0,0])cylinder(hoy,2,2);
+rotate([0,0,90])
+cylinder(hoy,15/2,15/2,$fn=6);
+}
+
+module hull(){
+for (i=[-1:2:1])
+    translate([i*9,0,0])cylinder(40,2,2,center=true);
+rotate([0,0,90])
+cylinder(40,9/2,9/2,$fn=12,center=true);
+}
