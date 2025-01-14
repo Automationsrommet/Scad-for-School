@@ -20,11 +20,11 @@ m4headdia=15;
 m4dia=3.95;
 m4pitch=3.8/5;
 m10margin=0.2;
-m10head=25;
-m10headdia=14;
+m10head=26;
+m10headdia=19;
 m10dia=10;
 m10pitch=12/8;
-skruedetalj=20;
+skruedetalj=5;
 
 //Potmeter-parameter
 gjengelengde=10.5;
@@ -45,18 +45,18 @@ $fn=20;
 
 difference(){
 union(){
-//color("red")vugge();
-//color("blue")oest();
-//color("silver")vest();
-//color("brown")nord();
-//color("chocolate")soer();
+color("red")vugge();
+color("blue")oest();
+color("silver")vest();
+color("brown")nord();
+color("chocolate")soer();
 //ambolt();
 
-//color("grey")ramme();
-//color("orange")yramme();
-//translate([0,0,00])color("cyan")base();
-//translate([0,0,0])kuppel();
-handtak();
+color("grey")ramme();
+color("orange")yramme();
+translate([0,0,00])color("cyan")base();
+translate([0,0,0])kuppel();
+//handtak();
 }
 translate([-25,0,0])
 rotate([0,90,0])pot();
@@ -250,10 +250,9 @@ module kjoel(){
 }
 module vugge(){
     intersection(){
-    intersection(){
-        rotate([90,0,0])
-        cylinder(4*mek,2*mek,2*mek,center=true);      
-        rotate([0,90,0])cylinder(4*mek,2*mek,2*mek,center=true);}
+    //intersection(){
+        //rotate([90,0,0])cylinder(4*mek,2*mek,2*mek,center=true);      
+        rotate([0,90,0])cylinder(4*mek,2*mek,2*mek,center=true);//}
     cube([4*mek,4*mek,4*mek],center=true);
     }
     translate([3*mek,0,-1.5*mek])
@@ -316,9 +315,4 @@ module m10(len){
     color("silver")
     translate([0,0,-m10head])
     cylinder(m10head,m10headdia/2+m10margin,m10headdia/2+m10margin,center=false,$fn=6);
-}
-translate([0,0,-gjengelengde-godshoyde])
-cylinder(godshoyde,godsdia/2,godsdia/2,center=false);
-translate([-godsdia/2,0,-gjengelengde-godshoyde*3/4])
-cube([konnektorbredde,konnektorbredde,godshoyde/2],center=true);
 }
