@@ -24,7 +24,7 @@ m10head=26;
 m10headdia=19;
 m10dia=10;
 m10pitch=12/8;
-skruedetalj=5;
+skruedetalj=12;
 
 //Potmeter-parameter
 gjengelengde=10.5;
@@ -42,21 +42,18 @@ bunn=2;
 mek=8;      //Mekanisk enhet
 
 $fn=20;
-
 difference(){
 union(){
-color("red")vugge();
-color("blue")oest();
-color("silver")vest();
-color("brown")nord();
-color("chocolate")soer();
-//ambolt();
-
-color("grey")ramme();
-color("orange")yramme();
-translate([0,0,00])color("cyan")base();
-translate([0,0,0])kuppel();
-//handtak();
+//color("red")vugge();
+//color("blue")oest();
+//color("silver")vest();
+//color("brown")nord();
+//color("chocolate")soer();
+//color("grey")ramme();
+//color("orange")yramme();
+//translate([0,0,00])color("cyan")base();
+//translate([0,0,0])kuppel();
+handtak();
 }
 translate([-25,0,0])
 rotate([0,90,0])pot();
@@ -86,12 +83,12 @@ module handtak(){
     difference(){
         union(){
  translate([0,0,70])cylinder(100,15,15,$fn=7,center=false);
- translate([0,0,50])cylinder(20,0,15,$fn=7,center=false);
+ translate([0,0,50])cylinder(20,7,15,$fn=7,center=false);
         }
-     translate([0,6,160])cube([10,5,40],center=true);
-        translate([0,-6,160])cube([10,5,40],center=true);
-        translate([0,9,160])cube([3,3,400],center=true);
-        translate([0,-9,160])cube([3,3,400],center=true);
+     translate([0,6,160])cube([14,4.7,70],center=true);
+        translate([0,-6,160])cube([14,4.7,70],center=true);
+        translate([0,7,160])cube([3,3,400],center=true);
+        translate([0,-7,160])cube([3,3,400],center=true);
        translate([0,0,160])
         rotate([90,0,0])cylinder(18,7,7,center=true);  
    translate([0,0,160])
@@ -185,10 +182,10 @@ module ramme(){
    ambolt();  
     difference(){
         intersection(){
-        intersection(){
+        //intersection(){
         rotate([90,0,0])
         cylinder(10*mek,5*mek,5*mek,center=true);      
-        rotate([0,90,0])cylinder(10*mek,5*mek,5*mek,center=true);}
+        //rotate([0,90,0])cylinder(10*mek,5*mek,5*mek,center=true);}
         cube([10*mek,10*mek,4*mek],center=true);
     }
         cube([8*mek,8*mek,5*mek],center=true);
