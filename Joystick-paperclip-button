@@ -1,0 +1,62 @@
+innsats();
+knapp();
+module innsats(){
+intersection(){
+translate([0,0,143+4])cube([13,4.5,36+8],center=true);
+difference(){
+    union(){
+translate([0,2,160-20-2])
+cylinder(20,7/2,5/2,center=true);
+translate([0,2,160-8.5-2])
+cylinder(3,5/2,0,center=true);
+translate([0,-2,160-20-2])
+cylinder(20,7/2,5/2,center=true);
+translate([0,-2,160-8.5-2])
+cylinder(3,5/2,0,center=true);
+translate([0,0,160])cube([13,2,70],center=true);
+        difference(){
+    translate([0,0,143+4])cube([13,6.5,36+8],center=true);
+    translate([0,0,143+4])cube([10,7.5,34+8],center=true);
+    }
+}
+
+translate([0,0,160-31])
+rotate([90,0,0])
+cylinder(20,2,2,center=true);
+for(l=[-3:1:6])
+translate([0,0,160-l])
+rotate([90,0,0])
+cylinder(20,5,5,center=true);
+translate([0,-14,160-2])
+rotate([0,90,0])
+cylinder(20,15,15,center=true);
+translate([0,-3,160-31])
+rotate([0,0,0])
+cylinder(50,2,2,center=true);
+
+}
+}
+}
+
+module knapp(){
+
+
+difference(){
+    union(){
+translate([20,0,160])
+        rotate([90,0,0])cylinder(1.5,6,6,center=false);  
+   translate([20,0,160])
+        rotate([90,0,0])cylinder(8,5,5,center=false);
+translate([20,-8,160])
+rotate([90,0,0])
+        resize([10,10,4])sphere(5);
+        translate([20,0,160])
+rotate([90,0,0])
+        resize([12.5,12.5,4])sphere(5,$fn=8);
+    }
+    translate([20,0,160])
+    for (i=[0:45:180])
+        rotate([0,i,0])
+    cube([1,10,20],center=true);
+}
+}
