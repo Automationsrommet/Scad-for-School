@@ -1,81 +1,80 @@
 // to do
-//handtaket         
+
 //to knapper
-//kuppel            Check
-//stødig base       Check
 //montering til xiaoRP2040
-//Skruer på aksene  Check
-//Skruer til ramma  Check
+//Set-skrue til indre ramme
+//Litt mindre margin på M4
 
-//Skrue-parameter
-tremargin=0.1;
-tredia=4;
-trepitch=2.625;
-trelen=10;
-trehead=8;
-treheaddia=15;
-m4margin=0.2;
-m4head=5;
-m4headdia=15;
-m4dia=3.95;
-m4pitch=3.8/5;
-m10margin=0.2;
-m10head=26;
-m10headdia=19;
-m10dia=10;
-m10pitch=12/8;
-skruedetalj=12;
+//Bruksinstruks:
+//Velg tingen du vil ha fra linje 52-61
+//fjern kommenteringen på denne så teksten blir svart.
+//Rendre så tegningen med F6 og lagre STL under et fornuftig navn på et fornuftig sted.
 
-//Potmeter-parameter
+//Potmeterparameter:
 gjengelengde=10.5;
 gjengedia=10;
-akseldia=6;
-aksellengde=39;
-godshoyde=19;
-godsdia=40;
-konnektorbredde=27;
-//Rammehøyde
+akseldia=6.7;
+aksellengde=30;
+godshoyde=10;
+godsdia=21;
+konnektorbredde=19;
+offcenter=11;
 rammehoyde=4;
 rund=1;
 baseh=10;
 bunn=2;
-mek=8;      //Mekanisk enhet
+mek=6;      //Mekanisk enhet
+
+//Skrueparameter:
+tremargin=0.4;
+tredia=4;
+trepitch=2.625;
+trelen=10;
+trehead=8;
+treheaddia=12;
+m4margin=0.5;
+m4head=6;
+m4headdia=15;
+m4dia=4.5;
+m4pitch=3.8/5;
+m10margin=0.3;
+m10head=26;
+m10headdia=18;
+m10dia=10.8;
+m10pitch=12/8;
+skruedetalj=12;
+
 
 $fn=20;
+
 difference(){
 union(){
 //color("red")vugge();
-//color("blue")oest();
-//color("silver")vest();
-//color("brown")nord();
-//color("chocolate")soer();
+color("blue")oest();
+color("silver")vest();
+color("brown")nord();
+color("chocolate")soer();
 //color("grey")ramme();
-//color("orange")yramme();
-//translate([0,0,00])color("cyan")base();
-//translate([0,0,0])kuppel();
-handtak();
+color("orange")yramme();
+//translate([0,0,0])color("cyan")base();
+//translate([0,0,0])kuppel();    
+//handtak();
 }
-translate([-25,0,0])
-rotate([0,90,0])pot();
-translate([0,-3*mek,0])
-    rotate([0,0,90])translate([-25,0,0])
-rotate([0,90,0])pot();
-translate([mek*4.5,0,00])rotate([0,-90,0])m4(40);
-translate([-mek*1,0,-12])m4(12);
-translate([0,mek*9,00])rotate([90,0,0])m4(40);
-strikkskruer();
 
+translate([mek*4.5,0,00])rotate([0,-90,0])m4(40);//Indre ramme akselskrue
+translate([0,mek*7.7,00])rotate([90,0,0])m4(40);//Ytre ramme akselskrue
+potter();
 monteringsskruer();
-    translate([0,0,10])m10(60);
+    translate([0,0,5])m10(60);//Handtakbolten
 }
 
 module strikkskruer(){
     for(k=[-1:2:1]){
-translate([mek*3.2,mek*6.5,k*mek*0.5])rotate([90,0,0])m4(12);
-translate([-mek*3.2,mek*5.5,k*mek*0.5])rotate([90,0,180])m4(12);
+translate([mek*3.2,mek*6.5+20,k*mek*0.5])rotate([90,0,0])m4(32);
+translate([-mek*3.2,mek*5.5-20,k*mek*0.5])rotate([90,0,180])m4(32);
     rotate([0,0,-90])translate([0,-mek*3,0]){
-    translate([mek*3.2,mek*6.5,k*mek*0.5])rotate([90,0,0])m4(12);
-translate([-mek*3.2,mek*5.5,k*mek*0.5])rotate([90,0,180])m4(12);
+    translate([mek*3.2,mek*6.5+20,k*mek*0.5])rotate([90,0,0])m4(32);
+translate([-mek*3.2,mek*5.5-20,k*mek*0.5])rotate([90,0,180])m4(32);
     }
 }
 }
@@ -100,9 +99,9 @@ module monteringsskruer(){
     for(i=[-1:2:1])
         for(j=[-1:2:1]){
             rotate([0,0,5])
-    translate([i*mek*7.5,j*mek*7.5,5])tre(25);
+    translate([i*mek*7.5,j*mek*7.5,2])tre(20);
             rotate([0,0,-5])
-    translate([i*mek*7.5,j*mek*7.5,-15])tre(25);
+    translate([i*mek*7.5,j*mek*7.5,-18])tre(20);
 }}
 module base(){
      difference(){
@@ -122,6 +121,13 @@ module base(){
         circle((rund+0.5)*2.5*mek);
         square([16*mek-rund*mek*(2+1),16*mek-rund*mek*(2+1)],center=true);
         }
+    }
+    module potter(){
+     translate([-2.8*mek,0,0])
+rotate([0,90,0])pot();
+translate([0,-3*mek,0])
+    rotate([0,0,90])translate([-25,0,0])
+rotate([0,90,0])pot();   
     }
     module kuppel(){
         difference(){minkowski(){
@@ -152,12 +158,12 @@ module hub(){
 }
 module yramme(){
    translate([0,3*mek,0])
-    rotate([0,0,90])translate([3.5*mek,3*mek,-0.5*mek])
+    rotate([0,0,90])translate([3.5*mek+0.5,3*mek,-0.5*mek])
    rotate([0,0,180])ambolt(); 
-    translate([4.5*mek,6*mek,0])
+    translate([4.5*mek,6*mek+1,0])
     cube([mek,2*mek,rammehoyde*mek],center=true);
    translate([0,3*mek,0])
-    rotate([0,0,90])translate([2.5*mek,-3*mek,-0.5*mek])
+    rotate([0,0,90])translate([2.5*mek+0.5,-3*mek,-0.5*mek])
    ambolt();  
     difference(){
         minkowski(){
@@ -168,17 +174,29 @@ module yramme(){
         cylinder(1,rund*mek,rund*mek,center=true);
         cube([14*mek-rund*mek*2,14*mek-rund*mek*2,5*mek],center=true);
         }
+        translate([20,55,0])
+    rotate([90,0,0])
+    cylinder(30,6,6,center=true);
+        translate([-20,-55,0])
+    rotate([90,0,0])
+    cylinder(30,6,6,center=true);
+    translate([mek*4.5,0,00])rotate([0,-90,0])m4(40);//Indre ramme akselskrue
+translate([0,mek*7.6,00])rotate([90,0,0])m4(40);//Ytre ramme akselskrue
+        translate([0,mek*8.6,00])rotate([90,0,0])m4(40);//Ytre ramme akselskrue
+        translate([-30,0,0])cylinder(50,20,20,center=true);
     }
-    translate([0,3*mek,0])
-    rotate([0,0,90])
-    translate([3*mek,0,-1.5*mek])
-    kjoel();
+    translate([mek*3.2,mek*6.5-28,mek*0.5])rotate([90,0,180])m4(32);
+//    translate([0,3*mek,0])
+//    rotate([0,0,90])
+//    translate([3*mek,0,-1.5*mek])
+//    rotate([0,0,180])
+//    kjoel();
 }
 
 module ramme(){
-   translate([3.5*mek,3*mek,-0.5*mek])
+   translate([3.5*mek+0.5,3*mek,-0.5*mek])
    rotate([0,0,180])ambolt(); 
-   translate([2.5*mek,-3*mek,-0.5*mek])
+   translate([2.5*mek+0.5,-3*mek,-0.5*mek])
    ambolt();  
     difference(){
         intersection(){
@@ -189,34 +207,55 @@ module ramme(){
         cube([10*mek,10*mek,4*mek],center=true);
     }
         cube([8*mek,8*mek,5*mek],center=true);
+     for(k=[-1:2:1])
+    translate([-30*-k,k*-3*mek,0])
+    rotate([0,90,0])
+    cylinder(20,5,5,center=true);
+     translate([mek*4.5,0,00])rotate([0,-90,0])m4(40);//Indre ramme akselskrue
+translate([0,mek*7.7,00])rotate([90,0,0])m4(40);//Ytre ramme akselskrue
     }
+   
     translate([0,3*mek,0])
     rotate([0,0,90])
     translate([3*mek,0,-1.5*mek])
     kjoel();
 }
 module oest(){
+    difference(){
    translate([3.5*mek,2*mek,0.5*mek])
    hammer();
+        strikkskruer();
+     }
    translate([3*mek,1*mek,-1.5*mek])kjoel();
-   translate([3.5*mek,1*mek,-0.5*mek])cube([mek,mek,2*mek],center=true); 
+    
+   translate([3*mek,1*mek,-1.5*mek])rotate([0,0,180,])kjoel();
+   translate([3.5*mek,1*mek,-0.5*mek])cube([mek,mek-1,2*mek],center=true); 
    translate([3.5*mek,0,-0])hub(); 
 }
 module vest(){
+    difference(){
    translate([2.5*mek,-2*mek,0.5*mek])
    hammer();
-   translate([2.5*mek,-1*mek,-1.0*mek])cube([mek,mek,2*mek],center=true); 
+        strikkskruer();
+     }
+   translate([2.5*mek,-1*mek,-1.0*mek])cube([mek,mek-1,2*mek],center=true);  
    translate([3*mek,-1*mek,-1.5*mek])kjoel();
+   translate([3*mek,-1*mek,-1.5*mek])rotate([0,0,180])kjoel();
     translate([2.5*mek,0,0])hub();
 }
 module nord(){
     translate([0,3*mek,0])
     rotate([0,0,90])
     {
-     translate([3.5*mek,2*mek,0.5*mek])
+     difference(){
+         translate([3.5*mek,2*mek,0.5*mek])
    hammer();
+         strikkskruer();
+     }
+        
    translate([3*mek,1*mek,-1.5*mek])kjoel();
-   translate([3.5*mek,1*mek,-0.5*mek])cube([mek,mek,2*mek],center=true); 
+        translate([3*mek,1*mek,-1.5*mek])rotate([0,0,180])kjoel();
+   translate([3.5*mek,1*mek,-0.5*mek])cube([mek,mek-1,2*mek],center=true); 
    translate([3.5*mek,0,-0])hub();   
     }
 }
@@ -224,18 +263,23 @@ module soer(){
     translate([0,3*mek,0])
     rotate([0,0,90])
     {
+        difference(){
         translate([2.5*mek,-2*mek,0.5*mek])
    hammer();
-   translate([2.5*mek,-1*mek,-1.0*mek])cube([mek,mek,2*mek],center=true); 
-   translate([3*mek,-1*mek,-1.5*mek])kjoel();
+            strikkskruer();
+     }
+   translate([2.5*mek,-1*mek,-1.0*mek])cube([mek,mek-1,2*mek],center=true); 
+   translate([3*mek,-1*mek,-1.5*mek])kjoel(); 
+   translate([3*mek,-1*mek,-1.5*mek])rotate([0,0,180])kjoel();
     translate([2.5*mek,0,0])hub();
         }
 }
 module ambolt(){   
    difference(){ 
-    cube([mek,2*mek,mek],center=true);
-       translate([0,mek,-mek/4])
-    rotate([45,0,0])cube([mek,2*mek,mek],center=true);
+       translate([0,0,-0.5*mek])
+    cube([mek-1,2*mek,2*mek],center=true);
+       translate([0,mek,-mek*1.3])
+    rotate([45,0,0])cube([2*mek,3*mek,2*mek],center=true);
        
    }   //translate([0,0,0])    linear_extrude(3*mek)    rotate([0,-90,0])    polygon([[mek,-0.5*mek],[mek,0.5*mek],[-mek,0.5*mek],[-mek,-0.5*mek]]);
 }
@@ -243,20 +287,35 @@ module hammer(){
     cube([mek,4*mek,mek],center=true);
 }
 module kjoel(){
-    cube([2*mek,mek,1*mek],center=true);
-}
-module vugge(){
-    intersection(){
-    //intersection(){
-        //rotate([90,0,0])cylinder(4*mek,2*mek,2*mek,center=true);      
-        rotate([0,90,0])cylinder(4*mek,2*mek,2*mek,center=true);//}
-    cube([4*mek,4*mek,4*mek],center=true);
+    difference(){
+    translate([-0.5,0,0])
+    cube([2*mek-1,mek-1,1*mek],center=true);
+    translate([2.0,0,0])
+    rotate([0,-90,0])
+    tre(25);
     }
+}
+//translate([0,30,0])tre(25);
+module vugge(){
+    //intersection(){
+       difference(){   
+        rotate([0,90,0])cylinder(4*mek,2*mek,2*mek,center=true);
+    //cube([4*mek,4*mek,4*mek],center=true);
+           translate([3*mek,0,-1.5*mek])
+     translate([2.0,0,0])
+    rotate([0,-90,0])
+    tre(25);
+           rotate([90,0,-5])translate([-mek*1.5,0,-12])tre(12);
+       }
+    //}
     translate([3*mek,0,-1.5*mek])
     kjoel();
-    //translate([3.5*mek,0,-1.5*mek])    kjoel();
+    
 }
 module pot(){
+    translate([0,--offcenter,2-gjengelengde-godshoyde/2])
+    rotate([0,0,0])
+    cylinder(godshoyde,3.5/2,3.6/2,center=true);
 cylinder(aksellengde,akseldia/2,akseldia/2,center=false);
 translate([0,0,-gjengelengde])
 cylinder(gjengelengde,gjengedia/2,gjengedia/2,center=false);
@@ -279,15 +338,15 @@ module tre(len){
 }
 color("silver")
     translate([0,0,-trehead])
-    cylinder(trehead,treheaddia/2+tremargin,0,center=false);
+    cylinder(trehead,treheaddia/2+tremargin,tredia/2,center=false);
 translate([0,0,-trehead-14])
-    cylinder(14,treheaddia/2+tremargin*2,treheaddia/2+tremargin,center=false);
+    cylinder(14,treheaddia/2+tremargin*1.2,treheaddia/2+tremargin,center=false);
 }
 module m4(len){
     color("silver")
     difference(){
     rotate([0,0,90])cylinder(len,(m4dia+m4margin)/2,(m4dia+m4margin)/2,center=false);
-    for(i=[-m4pitch/3*skruedetalj:1:len/m4pitch*skruedetalj+m4pitch/3*skruedetalj])
+    for(i=[-m4pitch/3*skruedetalj+len*10/3+130:1:len/m4pitch*skruedetalj+m4pitch/3*skruedetalj])
     translate([0,0,i*m4pitch/skruedetalj])
     rotate([0,90,360/skruedetalj*i])
     translate([0,-(m4dia+m4margin*2)/2,-(m4dia*PI/skruedetalj)/2])
@@ -302,7 +361,7 @@ module m10(len){
     color("silver")
     difference(){
     rotate([0,0,90])cylinder(len,(m10dia+m10margin)/2,(m10dia+m10margin)/2,center=false);
-    for(i=[-m10pitch/3*skruedetalj:1:len/m10pitch*skruedetalj+m10pitch/3*skruedetalj])
+    for(i=[-m10pitch/3*skruedetalj+260:1:len/m10pitch*skruedetalj+m10pitch/3*skruedetalj])
     translate([0,0,i*m10pitch/skruedetalj])
     rotate([0,90,360/skruedetalj*i])
     translate([0,-(m10dia+m10margin*2)/2,-(m10dia*PI/skruedetalj)/2])
