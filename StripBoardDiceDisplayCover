@@ -1,0 +1,74 @@
+//Terningdisplay med mcp23016
+
+bredde=50;
+lengde=100;
+yttervegg=2;
+innervegg=2;
+innertak=15;
+strata=0.25;
+takhoyde=17;
+prikkstorrelse=3;
+terninghoyde=34;
+avstand=(lengde-2*terninghoyde)/4;
+
+ytterboks();
+uthulling();
+
+
+module uthulling(){
+difference(){
+    union(){
+    innerboks();
+    fendere();
+    }
+for(i=[-1:2:1])
+    translate([0,(terninghoyde/2+avstand)*i,15]){
+for(j=[-1:2:1])
+    for(k=[-1:1:1])
+        translate([k*terninghoyde/2,terninghoyde/2*j,0]){
+   cylinder(15,3,3,center=true);
+            prikk(4);
+}
+ //for(l=[-1:1:1])  
+    //translate([l*terninghoyde/2,0,0]){
+    cylinder(15,3,3,center=true);
+        prikk(4);
+    // } 
+}
+translate([0,0,15+50])cube(100,center=true);
+}
+}
+module fendere(){
+   for(i=[-1:2:1])
+    translate([0,(terninghoyde/2+avstand)*i,15]){
+for(j=[-1:2:1])
+    for(k=[-1:1:1])
+        translate([k*terninghoyde/2,terninghoyde/2*j,0]){  
+            prikk(5);
+}
+ //for(l=[-1:1:1])  
+    //translate([l*terninghoyde/2,0,0]){
+       prikk(5);
+     //} 
+} 
+}
+module prikk(dia){
+    minkowski(){
+ cube([prikkstorrelse,prikkstorrelse,prikkstorrelse*2],center=true);
+         rotate([45,45,45])cube(dia,center=true);
+            }
+}
+
+module innerboks(){
+    difference(){
+translate([0,0,7.5])cube([bredde,lengde,innertak],center=true);
+translate([0,0,(innertak-3)/2])cube([bredde-2*innervegg,lengde-2*innervegg,innertak-3],center=true);
+    }
+}
+
+module ytterboks(){
+difference(){
+translate([0,0,6.5])cube([bredde+2*yttervegg,lengde+2*yttervegg,takhoyde+strata],center=true);
+translate([0,0,6.5-strata/2])cube([bredde,lengde,takhoyde],center=true);
+    }
+}
