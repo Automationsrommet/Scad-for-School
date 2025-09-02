@@ -1,0 +1,17 @@
+difference(){
+    minkowski(){
+    intersection(){
+    rotate([0,0,45])
+    cube([180-8,180-8,0.5],center=true);
+       cube([230,40,20],center=true); 
+    }
+    cylinder(1,4,1,center=true);
+}
+translate([-100,-18,0])
+for(i=[0:1:25]){
+translate([i*126.5/10,0,0])cylinder(100,2.5,2.5,center=true);
+    translate([i*126.5/10,-5,0])cube([3,10,10],center=true);
+}
+translate([-103,0,0])rotate([0,0,0])
+linear_extrude(2)text("Hadsel VGS avd Melbu",13);
+}
