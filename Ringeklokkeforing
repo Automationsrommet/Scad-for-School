@@ -1,0 +1,17 @@
+
+difference(){
+cube([10,7,9],center=true);
+cube ([5,5,11],center=true);
+}
+
+translate([9,0,0]){
+difference(){
+cube([9,5,9],center=true);
+for(i=[-1:2:1])
+translate([0,i*6,0])
+rotate([0,0,45])
+cube(10,center=true);
+}
+rotate([0,90,0])
+cylinder(9,2.9,2.9,center=true,$fn=6);
+}
