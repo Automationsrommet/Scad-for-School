@@ -1,0 +1,21 @@
+difference(){
+linear_extrude(2)
+difference(){
+translate([0,15,0])
+square([180,120],center=true);
+
+
+square([101,52],center=true);
+
+
+for(i=[-1:2:1])
+for(j=[0:5:90])
+translate([i*135/2,52/2+9,0])
+rotate([0,0,-i*j])
+translate([0,51/2+8/2])
+square([4,8],center=true);
+}
+translate([-82,35,1])
+linear_extrude(2)
+text("MSLA-belysningsmaske 2025",9);
+}
