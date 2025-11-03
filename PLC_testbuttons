@@ -9,11 +9,12 @@ husbredde=100;
 kolonner=3;
 rader=5;
 
-//hus();
+hus();
 //kilen();
 //translate([bredde+3,hoyde+1,0])knapp();
 //translate([bredde-1,hoyde+1,2])innsats();
-overgang();
+//overgang();
+
 module overgang(){
 intersection(){
 translate([bredde-1,hoyde+1,2])innsats();
@@ -27,6 +28,7 @@ cube(0.8);
 }
 }
 }
+
 module hus(){
 difference(){
 minkowski(){
@@ -36,7 +38,7 @@ cylinder(6,7.5,3.5,center=false,$fn=kanter*2);
 }
 knapper();
 
-translate([0,0,-27+5])cube([35,1000,2],center=true);
+translate([0,0,-27+5])cube([36,1000,2.5],center=true);
 translate([0,0,-27+3])cube([30,1000,6],center=true);
 
 translate([husbredde/2-15,0,-25])cube([20,50,15],center=true);
@@ -55,36 +57,18 @@ cylinder(20,3,3,center=true);
 translate([husbredde/2,25,-22])
 rotate([0,90,45])
 cylinder(20,3,3,center=true);
-//translate([0,7*2,-13])
-//cube([2,20,8],center=true);
-//translate([0,0,-5])
-//cube([45,1.5,16],center=true);
-//translate([11*2,0,-3])
-//cube([6,45,8],center=true);
-//translate([-11*2,0,-3])
-//cube([6,45,8],center=true);
-//translate([0,bredde,-14])
-//rotate([90,0,0])
-//cylinder(16*2,3,3,center=true);
-//translate([0,0,-16])
-//rotate([0,0,65])
-//cube([2,60,7],center=true);
-//translate([0,0,-16])
-//rotate([0,0,-65])
-//cube([2,60,7],center=true);
-//translate([0,0,-18])cylinder(20,2.5,2.5,center=false);
-//for(i=[-1:2:1])
-//for(j=[-1:2:1]){
-//translate([i*bredde,j*hoyde,-19])
-//cylinder(8,0,4,center=false);
-//}
+for(i=[-(rader-1)/2+1/2:1:(rader-1)/2])
+for(j=[-(kolonner-1)/2+1/2:1:(kolonner-1)/2])
+translate([i*bredde*1.1,j*hoyde*1.1,-28])
+cylinder(30,1,1,center=false);
 }
 }
+
 
 module knapper(){
 for(i=[-rader/2+1/2:1:rader/2])
 for(j=[-kolonner/2+1/2:1:kolonner/2]){
-translate([i*bredde*1.1+2,j*hoyde*1.1,0])
+translate([i*bredde*1.1,j*hoyde*1.1,0])
 rotate([0,0,0]){
 knappeplass();
 }
@@ -106,7 +90,7 @@ minkowski(){
 square([bredde-2*rund,hoyde-2*rund],center=true);
 circle(rund+0.6 ,$fn=kanter);
 }
-translate([bredde/2-3,0,-(bukter*trinn)-trinn-1/2])
+translate([bredde/2-3,0,-(bukter*trinn)-trinn-1/2+0.5])
 cylinder(10+1,4+1,4+1,center=false,$fn=4);
 translate([bredde/2-3,0,-(bukter*trinn)-trinn-1/2])
 cylinder(60+1,2,2,center=true,$fn=4);
