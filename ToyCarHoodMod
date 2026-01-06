@@ -1,0 +1,49 @@
+//panseret();
+//aksel();
+nymodell();
+module panseret(){
+difference(){
+    intersection(){
+     panser();
+     modell();   
+    }
+    aksel();
+    }
+}
+module aksel(){
+    translate([0,32,192])
+    rotate([0,90,0])
+    cylinder(145,3.3,3.3,center=true);
+}
+module nymodell(){
+difference(){
+modell();
+    minkowski(){
+panser();
+        sphere(1);
+    }
+    aksel();
+}
+}
+module panser(){
+    intersection(){
+   oven();
+tvers();     
+    }
+}
+module oven(){
+translate([0,-60,120])
+rotate([-90,0,0])
+linear_extrude(200)
+polygon([[0,-12],[30,0-5],[60,10],[55,-78],[-55,-78],[-60,10],[-30,-5]]);
+}
+module modell(){
+translate([-117,-72,0])
+import ("rooffront.stl");
+}
+module tvers(){
+translate([100,60,120])
+rotate([0,-90,0])
+linear_extrude(200)
+polygon([[-10,10],[100,-20],[80,-30],[80-5,-30-5],[70,-30-5],[60,-20],[-10,-10]]);
+}
