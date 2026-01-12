@@ -1,0 +1,692 @@
+//pinner 0 - 13 og GND på enne siden
+//A5 analog inngang på den andre
+pinneavstand=2.54;
+pinnebredde=0.8;
+pinnehoyde=11;
+pad=1.1;
+hullradius=0.4;
+sjusegmentlengde=17.5;
+sjusegmentbredde=12.5;
+pothoyde=5;
+potradius=7.5;
+
+$fn=20;
+//translate([1.5-5,-0.5,-20])rotate([0,0,90]) hardware();
+//translate([-30-5,26,-30])rotate([0,0,-90])arduino();
+    hoyde=15;
+bredde=16;
+trinn=2.5;
+bukter=5;
+rund=2;
+kanter=9;
+hushoyde=20;
+husbredde=80;
+kolonner=3;
+rader=1;
+
+hus();
+//deksel();
+//sokkel();
+//kilen();
+//knappene();
+//overgang();
+
+
+
+module sokkel(){
+difference(){
+translate([0,0,-25])
+minkowski(){
+cube([74,50,15],center=true);
+cylinder(10,5,3,center=false);
+}
+translate([0,0,-18.5])
+linear_extrude(15)
+minkowski(){
+square([70.5,46.5],center=true);
+circle(5);
+}
+for(i=[0:1:5])
+translate([-30-5+i,26,-30+i*2])rotate([0,0,-90])
+minkowski(){
+arduino();
+sphere(1.3,$fn=4);
+}
+}
+}
+module deksel(){
+difference(){
+translate([2,0,-19])
+cube([34+5,46,2],center=true);
+dekselskruer();
+}
+}
+module dekselskruer(){
+for (i=[-1:2:1])
+for(j=[-1:2:1])
+translate([i*18+2,j*21,-20])
+cylinder(20,1.5,0.5,center=false);
+}
+module spor(){
+color("white")
+for(i=[-3:1:2])
+translate([20,i*-8.5-1,-18])
+cube([9,1,2],center=true);
+translate([-5,10.5+14,-19])
+rotate([0,0,180 - 20])cube([1,15,2],center=false);
+translate([-5+2.5,10.5+14,-19])
+rotate([0,0,180 -10])cube([1,15,2],center=false);
+translate([-5+5,10.5+15,-19])
+rotate([0,0,180 + 00])cube([1,15,2],center=false);
+translate([-5+7.5,10.5+15,-19])
+rotate([0,0,180 + 10])cube([1,15,2],center=false);
+translate([-5+10,10.5+15,-19])
+rotate([0,0,180 + 20])cube([1,18,2],center=false);
+translate([-5+12.5,10.5+15,-19])
+rotate([0,0,180 + 30])cube([1,19,2],center=false);
+translate([-5+16,10.5+15,-19])
+rotate([0,0,180 + 60])cube([1,15,2],center=false);
+translate([22,11,-18])
+rotate([0,0,90])cube([1,15,2],center=true);
+translate([17,5,-18])
+rotate([0,0,65])cube([1,19,2],center=true);
+translate([-17,5,-18])
+rotate([0,0,120])cube([1,19,2],center=true);
+translate([0,-12,-18])
+rotate([0,0,90])cube([1,48,2],center=true);
+translate([-5,-22.5,-18])
+rotate([0,0,80])cube([1,35,2],center=true);
+
+translate([-5,-22.5,-18])
+cube([3,3,2],center=true);
+translate([-12,5,-18])
+rotate([0,0,120])cube([1,19,2],center=true);
+translate([-12,2,-18])
+rotate([0,0,120])cube([1,30,2],center=true);
+translate([-12,-1,-18])
+rotate([0,0,120])cube([1,40,2],center=true);
+for(j=[-2:1:3])
+translate([5*j,10,-18])
+cube([3,3,2],center=true);
+translate([20,20,-18])
+cube([3,3,2],center=true);
+}
+module knappene(){
+for(i=[1:1:3]){
+difference(){
+translate([i*(bredde+1),0,0])
+rotate([90,0,0])knapp();
+translate([i*(bredde+1)-3,-5,2.5])
+rotate([0,90,-90])
+linear_extrude(2)text(str(i),6);
+}
+}
+//for(j=[10:1:15]){
+//difference(){
+//translate([j*(bredde+1),0,0])
+//rotate([90,0,0])knapp();
+//translate([j*(bredde+1)-3,-5,4.5])
+//rotate([0,90,-90])
+//linear_extrude(2)text(str(j),6);
+//}
+//}
+}
+module lyser(){
+for (i=[-1:1:1]){
+translate([-10,i*16,-8])
+lys();
+translate([-10,i*16,3])
+difference(){
+cylinder(1,7,8,center=false);
+cylinder(1,6.5,7,center=false);
+}
+}
+translate([-10,0,-13+4])cube([18,49,12-8],center=true);
+translate([-25,0,-13])cube([15,48,12],center=true);
+translate([29,0,-13])cube([15,48,12],center=true);
+}
+module lys(){
+cylinder(11,3,6,center=false);
+}
+module stotter(){
+for(i=[-1:2:1])
+for(j=[-3:1:3])
+translate([i*12.5,j*8.5,-66.5])
+cylinder(6,0.5,0.5,center=false,$fn=4);
+translate([0,3*8.5,-66.5])
+cylinder(6,0.5,0.5,center=false,$fn=4);
+translate([0,-3*8.5,-66.5])
+cylinder(6,0.5,0.5,center=false,$fn=4);
+
+for (k=[-1:1:1]){
+translate([5,k*hoyde*1.15,-66.5+44.5])
+resize([80 ,0.75,6])
+rotate([0,0,45])
+cylinder(6,0.2,0.4,center=false,$fn=4);
+
+for(l=[-1:2:1])
+translate([l*18+5,k*hoyde*1.15,-36])
+rotate([0,15,0])
+cube([10,0.75,48],center=true);
+}
+}
+
+module overgang(){
+difference(){
+union(){
+intersection(){
+translate([bredde-1,hoyde+1,2])translate([bredde/2,0,-(bukter*trinn)-trinn-1/2])
+cylinder(9,4,4,center=false,$fn=4);;
+translate([bredde+1,hoyde+1,2])translate([bredde/2,0,-(bukter*trinn)-trinn-1/2])
+cylinder(10,4,4,center=false,$fn=4);
+}
+difference(){
+translate([bredde-1,hoyde+1,0])translate([bredde/2,0,-(bukter*trinn)-trinn-1/2])
+cylinder(10,4,4,center=false,$fn=4);
+minkowski(){
+translate([bredde-1,hoyde+1,2])translate([bredde/2,0,-(bukter*trinn)-trinn-1/2])
+cylinder(10,4,4,center=false,$fn=4);
+cube(0.8);
+}
+}
+}
+translate([bredde-1,hoyde+1,-(bukter*trinn)-trinn-1/2+8.5+2+1])
+cube([30,2,2],center=true);
+translate([25,hoyde+1,-(bukter*trinn)-trinn-1/2+8.5-6])
+rotate([0,-45,0])
+cube([30,1.5,1.5],center=true);
+translate([bredde+11,hoyde+1,-(bukter*trinn)-trinn-1/2+8])
+cube([2,2,20],center=true);
+translate([bredde+5.5,hoyde+1,-(bukter*trinn)-trinn-1/2+8])
+cube([1.5,1.5,20],center=true);
+}
+
+}
+
+module hus(){
+difference(){
+minkowski(){
+translate([0,0,-14.5-20])
+cube([husbredde-2*(5.5),kolonner*hoyde,70-6],center=true);
+cylinder(6,5.5,4.5,center=false,$fn=kanter*2);
+}
+translate([10,0,0])knapper();
+lyser();
+translate([1.5-5,-0.5,-20])rotate([0,0,90]) hardware();
+translate([-30-5,26,-30])rotate([0,0,-90])
+minkowski(){
+arduino();
+sphere(1,$fn=4);
+}
+spor();
+dekselskruer();
+
+translate([0,0,-27+5-40])cube([36,1000,2.5],center=true);
+translate([0,0,-27+3-40])cube([30,1000,6],center=true);
+translate([0,0,-27+3-40])cube([24,50,50],center=true);
+translate([husbredde/2-15,0,-25-40])cube([20,50,50],center=true);
+translate([-husbredde/2+15,0,-25-40])cube([20,50,50],center=true);
+//********
+translate([0,0,-15-22-12])cube([70+100,50+100,42+20],center=true);
+//********
+for(k=[-rader/2+1/2:1:rader/2])
+translate([k*(bredde+2)-3+10,5,0])kile();
+//translate([husbredde/2,25,-18])
+//rotate([0,90,45])
+//cylinder(20,3,3,center=true);
+//translate([husbredde/2,25,-25])
+//rotate([0,90,45])
+//cylinder(20,3,3,center=true);
+}
+}
+
+
+module knapper(){
+for(i=[-rader/2+1/2:1:rader/2])
+for(j=[-kolonner/2+1/2:1:kolonner/2]){
+translate([i*bredde*1.15,j*hoyde*1.15,0])
+rotate([0,0,0]){
+knappeplass();
+}
+}
+}
+
+module kile(){
+translate([0,0,-11.4])
+cube([8,60,1.7],center=true);
+}
+module kilen(){
+translate([0,0,-11.3])
+cube([7,50,1],center=true);
+}
+module knappeplass(){
+translate([0,0,-14])
+linear_extrude(17.5)
+minkowski(){
+square([bredde-2*rund,hoyde-2*rund],center=true);
+circle(rund+0.6 ,$fn=kanter);
+}
+translate([bredde/2-3,0,-(bukter*trinn)-trinn-1/2+0.5])
+cylinder(10+1,4+1,4+1,center=false,$fn=4);
+translate([bredde/2-3,0,-(bukter*trinn)-trinn-1/2])
+cylinder(60+1,2,2,center=true,$fn=4);
+translate([bredde/3,0,-3])
+cube([6,bredde+3,8],center=true);
+translate([bredde/2,hoyde/2,-(bukter*trinn)-trinn-1/2-13])
+cylinder(60+1,1.5,1.5,center=true,$fn=4);
+}
+
+module innsats(){
+difference(){
+translate([bredde/2,0,-(bukter*trinn)-trinn-1/2])
+cylinder(10,4,4,center=false,$fn=4);
+translate([bredde/2,0,-(bukter*trinn)-trinn-1/2+8.5+2])
+cube([20,2,2],center=true);
+translate([bredde/2,0,-(bukter*trinn)-trinn-1/2+8.5+2-10])
+cube([20,2,2],center=true);
+translate([bredde/2+2.9,0,-(bukter*trinn)-trinn-1/2+8])
+rotate([0,70,0])
+cube([20,2,2],center=true);
+translate([bredde/2-4,0,-(bukter*trinn)-trinn-1/2+8])
+rotate([0,70,0])
+cube([20,2,2],center=true);
+translate([bredde/2+2.8,0,-(bukter*trinn)-trinn-1/2+8])
+rotate([0,90,0])
+cube([20,2,2],center=true);
+}
+}
+
+module knapp(){
+intersection(){
+translate([0,0,-25])
+linear_extrude(50)
+minkowski(){
+square([bredde-2*rund,hoyde-2*rund],center=true);
+circle(rund,$fn=kanter);
+}
+difference(){
+union(){
+cylinder(8,(hoyde+bredde)/2,(hoyde+bredde)/5,center=false,$fn=kanter*2);
+translate([0,hoyde/2,-trinn*bukter-trinn])
+rotate([90,0,0])
+fjaer();
+}
+translate([bredde/2,0,-(bukter*trinn)-trinn-1/2])
+cylinder(12.51,4.5,4.5,center=false,$fn=4);
+translate([0,0,46])sphere(40,$fn=kanter*3);
+}
+}
+
+}
+
+module fjaer(){
+linear_extrude(hoyde){
+siksak();
+translate([bredde/2-1.7,(trinn*bukter)/2+2*trinn])
+difference(){
+circle(2);
+circle(1);
+}
+}
+}
+
+module siksak(){
+for(i=[0:1:bukter]){
+translate([0,i*trinn])
+square([bredde,1],center=true);
+translate([(bredde/2-1/2)*cos(180*i),i*trinn+trinn/2])
+square([1,trinn],center=true);
+}
+}
+
+module hardware(){
+//Arduino UNO R3, grovt skissert i grønt
+//translate([0,0,-5])color("green")cube([54,68,2],center=true);
+
+//Vårt shield, rosa med en skrå for å spare materiale
+//translate([0,0,-1])color("pink")linear_extrude(2)polygon([[27,15],[27,-34],[-27,-34],[-27,-16]]);
+
+////potmeter
+//  color("black")translate([-14,-28,6])cylinder(pothoyde,potradius,potradius,center=true);
+//  translate([-14-potradius,-28,3])pinne();
+//  translate([-14+potradius+1,-28+2*pinneavstand,3])pinne();
+//  translate([-14+potradius+1,-28-2*pinneavstand,3])pinne();
+  
+  //7-segment-display
+//  for (j=[0:sjusegmentbredde+1:sjusegmentbredde+1]){
+//   for (k=[-2*pinneavstand:pinneavstand:2*pinneavstand]){
+//    for (l=[-1:2:1]){
+//  translate([10,-26+j,6])color("white")cube([sjusegmentlengde,sjusegmentbredde,pothoyde],center=true);
+//          translate([10+l*((sjusegmentlengde/2)-1),-26+j+k,3])pinne();
+//    
+//       // translate([10-((sjusegmentlengde/2)+1.6),-26+j+k*l-2,0])pinne();   
+//        //translate([10+((sjusegmentlengde/2)+1.5),-26+j+k*l-1,0])pinne(); 
+//              }}}
+
+//Pinnene, starter på pinne 0
+for (i=[0:pinneavstand:pinneavstand*6])
+    {
+    translate([25,-32+i,0])color("silver")pinne();
+    translate([25,-32+7*pinneavstand,0])color("silver")pinne();
+    translate([25,-32+pinneavstand*8.5+i,0])pinne();
+    translate([25,-32+pinneavstand*8.5+7*pinneavstand,0])pinne();
+    //translate([25,-32+pinneavstand*(8+8.5),0])pinne();
+    translate([-25,-32+17.5,0])pinne();  
+    //disse er bare for å lage hull til motstander
+//    translate([25-2.5,-32+pinneavstand*8.5+i-2,0])pinne();
+//    translate([25-2.5,-32+i-1,0])pinne();
+//    translate([25-2.5,-32+7*pinneavstand-1,0])pinne();
+//    translate([25-2.5,-32-1,0])pinne();
+        
+}
+////Banene
+//color("orange")
+//{
+//    //Tekst, Det er viktig å se om noe er speilvendt
+//   translate([-25,-28.5,1])rotate([0,0,36])text("Kretskortøving",2.85);
+//    translate([-18,-30,1])rotate([0,0,36])text("EL1B",4.5);
+//    translate([-14.5,-34,1])rotate([0,0,36])text("2021/2022",2.35);
+//    translate([+6,-25,1])rotate([0,0,0])text("LAGET AV:",1.6);
+//    //Pinne 1 til 8
+//    for (m=[0:pinneavstand:pinneavstand*5])
+//    {
+//    bane(25,-32+m,25-2.5,-32+m-1);
+//bane(25,-32+pinneavstand*7,25-2.5,-32+pinneavstand*7-1);
+//        bane(25,-32+pinneavstand*6,25-2.5,-32+pinneavstand*6-1);
+//bane(25,-32+pinneavstand*8.5+m,25-2.5,-32+pinneavstand*8.5+m-2);      
+//}
+//for (n=[0:sjusegmentbredde+1:sjusegmentbredde+1]){
+// for (o=[pinneavstand:pinneavstand:2*pinneavstand]){
+//  for (p=[-1:2:1]){
+//  
+//    bane(10+((sjusegmentlengde/2)-1),-26+n+o*p,10+((sjusegmentlengde/2)+1.5),-26+n+o*p-1);
+//    bane(10-((sjusegmentlengde/2)-1),-26+n+o*p,10-((sjusegmentlengde/2)+1.6),-26+n+o*p-2);
+//          
+//              
+//          }}}
+//    //jording-banene
+//    bane(25,-32+pinneavstand*(8+6.5),10-1*((sjusegmentlengde/2)-1),-26+sjusegmentbredde+1);
+//    bane(10+1*((sjusegmentlengde/2)-1),-26+sjusegmentbredde+1,10-1*((sjusegmentlengde/2)-1),-26+sjusegmentbredde+1);
+//    bane(10+1*((sjusegmentlengde/2)-1),-26,10-1*((sjusegmentlengde/2)-1),-26+sjusegmentbredde+1);
+//    
+//    bane(10-((sjusegmentlengde/2)-1),-26+0+0*1,10-((sjusegmentlengde/2)+1.6),-26+0+0*1-2);      
+//    bane(10-((sjusegmentlengde/2)+1.6),-26+0+0*1-2,-14+potradius+1,-28-2*pinneavstand);     
+//    
+//    //aref-pinnen
+//bane(25,-32+pinneavstand*(8+7.5),+3,-32+pinneavstand*11.0);
+//bane(+3,-32+pinneavstand*11.0,-3,-32+pinneavstand*9.0);
+//bane(-3,-32+pinneavstand*9.0,-14+potradius+1,-28+2*pinneavstand);
+//    //A5 analog inn fra potmeteret
+//    bane(-14-potradius,-28,-25,-32 );
+//
+//// Kobber-plate for å spare etse-kjemikalier og bedre jording
+//          intersection(){
+//              union(){
+//          translate([10,-14.3,2])cube([13.1,18,1],center=true);
+//          //translate([17.5,7.2,2])rotate([0,0,28.2])cube([39,4,1],center=true);
+//translate([12.5,-3.2,2])rotate([0,0,29])cube([18,5,1],center=true);
+//translate([17.8,-2.5,2])cube([7,7,1],center=true);
+//         
+//translate([-10.5,-35.2,2])rotate([0,0,32])cube([8,6,1],center=true);    
+//translate([-19.5,-36.2,2])rotate([0,0,37])cube([9,10,1],center=true); 
+//              }
+//     cube([55-1,70-1,6],center=true);         
+//      }
+//}
+////Motstandende
+//
+////sjusegment to(med komma) fra toppen, stående motstander
+////motstandVertikal(25-2.5,-32+pinneavstand*8.5+pinneavstand*2-2,10+((sjusegmentlengde/2)+1.5),-26+sjusegmentbredde+1+2*pinneavstand*1-1);
+//motstandVertikal(25-2.5,-32+pinneavstand*8.5+pinneavstand*1-2,10+((sjusegmentlengde/2)+1.5),-26+sjusegmentbredde+1+1*pinneavstand*1-1);
+//motstandVertikal(25-2.5,-32+pinneavstand*8.5-2,10+((sjusegmentlengde/2)+1.5),-26+sjusegmentbredde+1+-1*pinneavstand*1-1);
+//motstandVertikal(25-2.5,-32+pinneavstand*7-1,10+((sjusegmentlengde/2)+1.5),-26+sjusegmentbredde+1+-2*pinneavstand*1-1);
+////Liggende motstander sjusegment 2
+//motstandHorisontal(25-2.5,-32+pinneavstand*8.5+pinneavstand*2-2,10-((sjusegmentlengde/2)+1.5),-26+sjusegmentbredde+1-2*pinneavstand*1-2);
+//motstandHorisontal(25-2.5,-32+pinneavstand*8.5+pinneavstand*3-2,10-((sjusegmentlengde/2)+1.5),-26+sjusegmentbredde+1-1*pinneavstand*1-2);
+//motstandHorisontal(25-2.5,-32+pinneavstand*8.5+pinneavstand*4-2,10-((sjusegmentlengde/2)+1.5),-26+sjusegmentbredde+1+1*pinneavstand*1-2);
+//motstandHorisontal(25-2.5,-32+pinneavstand*8.5+pinneavstand*5-2,10-((sjusegmentlengde/2)+1.5),-26+sjusegmentbredde+1+2*pinneavstand*1-2);
+//
+//
+////sjusegment en (uten komma)fra toppen, stående motstander
+////motstandVertikal(25-2.5,-32+pinneavstand*5-1,10+((sjusegmentlengde/2)+1.5),-26+2*pinneavstand*1-1);
+//motstandVertikal(25-2.5,-32+pinneavstand*4-1,10+((sjusegmentlengde/2)+1.5),-26+1*pinneavstand*1-1);
+//motstandVertikal(25-2.5,-32+pinneavstand*3-1,10+((sjusegmentlengde/2)+1.5),-26-1*pinneavstand*1-1);
+//motstandVertikal(25-2.5,-32+pinneavstand*2-1,10+((sjusegmentlengde/2)+1.5),-26-2*pinneavstand*1-1);
+////Liggende motstander sjusegment 1
+//motstandHorisontal(25-2.5,-32+pinneavstand*0-1,10-((sjusegmentlengde/2)+1.5),-26-2*pinneavstand*1-2);
+//motstandHorisontal(25-2.5,-32+pinneavstand*1-1,10-((sjusegmentlengde/2)+1.5),-26-1*pinneavstand*1-2);
+//motstandHorisontal(25-2.5,-32+pinneavstand*5-1,10-((sjusegmentlengde/2)+1.5),-26-1*pinneavstand*-1-2);
+//motstandHorisontal(25-2.5,-32+pinneavstand*6-1,10-((sjusegmentlengde/2)+1.5),-26-2*pinneavstand*-1-2);
+
+module bane(startx,starty,sluttx,slutty){
+  difference(){
+     union(){
+         translate([0,0,1]) linear_extrude(1){
+        translate([startx,starty,0])circle(pad, $fn=9);
+       translate([sluttx,slutty,0])circle(pad, $fn=9);
+       //polygon([[startx-pad/3,starty+pad/3],[startx+pad/3,starty-pad/3],[sluttx+pad/3,slutty-pad/3],[sluttx-pad/3,slutty+pad/3]]);
+             translate([startx+(sluttx-startx)/2,starty+(slutty-starty)/2,-3])rotate([0,0,90+asin((sluttx-startx)/sqrt((sluttx-startx)*(sluttx-startx)+(slutty-starty)*(slutty-starty)))])square([sqrt((sluttx-startx)*(sluttx-startx)+(slutty-starty)*(slutty-starty)),pad],center=true);
+    }
+}
+translate([startx,starty,0])cylinder(15,hullradius,hullradius,center=true );
+       translate([sluttx,slutty,0])cylinder(15,hullradius,hullradius,center=true );
+}
+}
+}
+module pinne (){
+ color("silver")cube([pinnebredde,pinnebredde,pinnehoyde],center=true);   
+}
+module motstandVertikal(startx,starty,sluttx,slutty){
+    
+    translate([startx,starty,-4]){
+    color("beige")cylinder(4,1,1,center=true);
+    translate([0,0,1.5])color("orange")cylinder(0.3,1.1,1.1,center=true);
+    translate([0,0,0.5])color("black")cylinder(0.3,1.1,1.1,center=true);
+    translate([0,0,-0.5])color("chocolate")cylinder(0.3,1.1,1.1,center=true);
+    translate([0,0,-1.5])color("silver")cylinder(0.3,1.1,1.1,center=true);
+    translate([0,0,2])color("beige")sphere(1);
+    translate([0,0,-2])color("beige")sphere(1);
+    }
+    //Motstandsbein uten klump
+    translate([sluttx,slutty,-2]){        translate([0,0,0])color("silver")cylinder(10,0.3,0.3,center=true);    }
+    //Motstandsbein med klump
+    translate([startx,starty,-2]){        translate([0,0,0])color("silver")cylinder(10,0.3,0.3,center=true);    }
+    //Motstandsbein liggende del
+    translate([startx+(sluttx-startx)/2,starty+(slutty-starty)/2,-7]){rotate([0,90,90+asin((sluttx-startx)/sqrt((sluttx-startx)*(sluttx-startx)+(slutty-starty)*(slutty-starty)))])color("silver")cylinder(sqrt((sluttx-startx)*(sluttx-startx)+(slutty-starty)*(slutty-starty)),0.3,0.3,center=true);        }
+    }
+    
+    module motstandHorisontal(startx,starty,sluttx,slutty){
+    
+    translate([startx+(sluttx-startx)/2,starty+(slutty-starty)/2,-3])rotate([0,90,90+asin((sluttx-startx)/sqrt((sluttx-startx)*(sluttx-startx)+(slutty-starty)*(slutty-starty)))]){
+    color("beige")cylinder(4,1,1,center=true);
+    translate([0,0,1.5])color("orange")cylinder(0.3,1.1,1.1,center=true);
+    translate([0,0,0.5])color("black")cylinder(0.3,1.1,1.1,center=true);
+    translate([0,0,-0.5])color("chocolate")cylinder(0.3,1.1,1.1,center=true);
+    translate([0,0,-1.5])color("silver")cylinder(0.3,1.1,1.1,center=true);
+    translate([0,0,2])color("beige")sphere(1);
+    translate([0,0,-2])color("beige")sphere(1);
+    }
+    //vertikale motstandsbein
+    translate([sluttx,slutty,0]){
+        translate([0,0,0])color("silver")cylinder(6,0.3,0.3,center=true);
+    }
+        translate([startx,starty,+0]){
+        translate([0,0,0])color("silver")cylinder(6,0.3,0.3,center=true);
+    }
+    translate([startx+(sluttx-startx)/2,starty+(slutty-starty)/2,-3]){
+    rotate([0,90,90+
+        asin((sluttx-startx)/sqrt((sluttx-startx)*(sluttx-startx)+(slutty-starty)*(slutty-starty)))
+        ])color("silver")cylinder(sqrt((sluttx-startx)*(sluttx-startx)+(slutty-starty)*(slutty-starty)),0.3,0.3,center=true);
+        }
+    }
+    headerWidth = 2.54;
+headerHeight = 9;
+mountingHoleRadius = 3.2 / 2;
+ ALL = -1;
+ HEADER_F = 0;
+HEADER_M = 1;
+USB = 2;
+POWER = 3;
+RJ45 = 4;
+UNO = 3;
+  pcbHeight = 1.7;
+ngWidth = 53.34;
+leonardoDepth = 68.58 + 1.1;           //PCB depth plus offset of USB jack (1.1)
+ngDepth = 68.58 + 6.5;
+megaDepth = 101.6 + 6.5;               //Coding is my business and business is good!
+dueDepth = 101.6 + 1.1;
+
+arduinoHeight = 11 + pcbHeight + 0;
+
+ngBoardShape = [ 
+  [  0.0, 0.0 ],
+  [  53.34, 0.0 ],
+  [  53.34, 66.04 ],
+  [  50.8, 66.04 ],
+  [  48.26, 68.58 ],
+  [  15.24, 68.58 ],
+  [  12.7, 66.04 ],
+  [  1.27, 66.04 ],
+  [  0.0, 64.77 ]
+  ];
+  //Uno, Leonardo holes
+unoHoles = [
+  [  2.54, 15.24 ],
+  [  17.78, 66.04 ],
+  [  45.72, 66.04 ],
+  [  50.8, 13.97 ]
+  ];
+boardShapes = [   
+  0,   //NG
+  0,   //Diecimila
+  0,   //Duemilanove
+  ngBoardShape,   //Uno
+  0,   //Leonardo
+  0, //Mega
+  0, //Mega 2560
+  0, //Due
+  0,              //Yun
+  0,              //Intel Galileo
+  0,              //Tre
+  0   //Ethernet
+  ];  
+  boardHoles = [ 
+  0,        //NG
+ 0,        //Diecimila
+  0,        //Duemilanove
+  unoHoles,       //Uno
+  0,       //Leonardo
+  0,      //Mega
+  0,       //Mega 2560
+  0,       //Due
+  0,              //Yun
+  0,              //Intel Galileo
+  0,              //Tre
+  unoHoles        //Ethernet
+  ];
+  ngComponents = [
+  [[1.27, 17.526, 0], [headerWidth, headerWidth * 10, headerHeight], [0, 0, 1], HEADER_F, "Black" ],
+  [[1.27, 44.45, 0], [headerWidth, headerWidth * 8, headerHeight ], [0, 0, 1], HEADER_F, "Black" ],
+  [[49.53, 26.67, 0], [headerWidth, headerWidth * 8, headerHeight ], [0, 0, 1], HEADER_F, "Black" ],
+  [[49.53, 49.53, 0], [headerWidth, headerWidth * 6, headerHeight ], [0, 0, 1], HEADER_F, "Black" ],
+  [[9.34, -6.5, 0],[12, 16, 11],[0, -1, 0], USB, "LightGray" ],
+  [[40.7, -1.8, 0], [9.0, 13.2, 10.9], [0, -1, 0], POWER, "Black" ]
+  ]; 
+  components = [
+  0,         //NG
+  0,         //Diecimila
+  0,         //Duemilanove
+  ngComponents,         //Uno
+  0,   //Leonardo
+  0,       //Mega
+  0,   //Mega 2560
+  0,        //Due
+  0,                    //Yun
+  0,                    //Intel Galileo
+  0,                    //Tre
+  0       //Ethernet
+  ];
+  
+  
+
+
+
+module arduino(boardType = UNO) {
+  //The PCB with holes
+  difference() {
+    color("SteelBlue") 
+      boardShape( boardType );
+    translate([0,0,-pcbHeight * 0.5]) holePlacement(boardType = boardType)
+      color("SteelBlue") cylinder(r = mountingHoleRadius, h = pcbHeight * 2, $fn=32);
+  }
+  //Add all components to board
+  components( boardType = boardType, component = ALL );
+}
+module components( boardType = UNO, component = ALL, extension = 0, offset = 0 ) {
+  translate([0, 0, pcbHeight]) {
+    for( i = [0:len(components[boardType]) - 1] ){
+      if( components[boardType][i][3] == component || component == ALL) {
+          //Calculates position + adjustment for offset and extention  
+          position = components[boardType][i][0] 
+            - (([1,1,1] - components[boardType][i][2]) * offset)
+            + [  min(components[boardType][i][2][0],0), min(components[boardType][i][2][1],0), min(components[boardType][i][2][2],0) ] 
+            * extension;
+          //Calculates the full box size including offset and extention
+          dimensions = components[boardType][i][1] 
+            + ((components[boardType][i][2] * [1,1,1]) 
+              * components[boardType][i][2]) * extension
+            + ([1,1,1] - components[boardType][i][2]) * offset * 2;        
+          translate( position ) color( components[boardType][i][4] ) 
+            cube( dimensions );
+      }
+    }  
+  }
+}
+
+ 
+  module holePlacement(boardType = UNO ) {
+  for(i = boardHoles[boardType] ) {
+    translate(i)
+      children(0);
+  }
+}
+module boardShape( boardType = UNO, offset = 0, height = pcbHeight ) {
+  dimensions = boardDimensions(boardType);
+
+  xScale = (dimensions[0] + offset * 2) / dimensions[0];
+  yScale = (dimensions[1] + offset * 2) / dimensions[1];
+
+  translate([-offset, -offset, 0])
+    scale([xScale, yScale, 1.0])
+      linear_extrude(height = height) 
+        polygon(points = boardShapes[boardType]);
+}
+function boardDimensions(boardType = UNO) = 
+  maxCompPoint([[pcbPosition(boardType), pcbDimensions(boardType)], [componentsPosition(boardType), componentsDimensions(boardType)]]) 
+  - minCompPoint([[pcbPosition(boardType), pcbDimensions(boardType)], [componentsPosition(boardType), componentsDimensions(boardType)]]); 
+//Determine the maximum point on a component in a list of components
+function maxCompPoint( list, index = 0, maximum = [-10000000, -10000000, -10000000] ) = 
+  index >= len(list) ? maximum : maxCompPoint( list, index + 1, maxVec( maximum, list[index][0] + list[index][1]));
+  //Determine the minimum point in a list of points
+function minPoint( list, index = 0, minimum = [10000000, 10000000, 10000000] ) = 
+  index >= len(list) ? minimum : minPoint( list, index + 1, minVec( minimum, list[index] ));
+  //Return the maximum values between two vectors of either length 2 or 3. 2D Vectors are treated as 3D vectors who final value is 0.
+function maxVec( vector1, vector2 ) =
+  [max(vector1[0], vector2[0]), max(vector1[1], vector2[1]), max((vector1[2] == undef ? 0 : vector1[2]), (vector2[2] == undef ? 0 : vector2[2]) )];
+
+//Determine the minimum point on a component in a list of components
+function minCompPoint( list, index = 0, minimum = [10000000, 10000000, 10000000] ) = 
+  index >= len(list) ? minimum : minCompPoint( list, index + 1, minVec( minimum, list[index][0] ));
+//Return the minimum values between two vectors of either length 2 or 3. 2D Vectors are treated as 3D vectors who final value is 0.
+function minVec( vector1, vector2 ) =
+  [min(vector1[0], vector2[0]), min(vector1[1], vector2[1]), min((vector1[2] == undef ? 0 : vector1[2]), (vector2[2] == undef ? 0 : vector2[2]) )];
+  //Returns the pcb position and dimensions
+function pcbPosition(boardType = UNO) = minPoint(boardShapes[boardType]);
+function pcbDimensions(boardType = UNO) = maxPoint(boardShapes[boardType]) - minPoint(boardShapes[boardType]) + [0, 0, pcbHeight];
+
+//Returns the position of the box containing all components and its dimensions
+function componentsPosition(boardType = UNO) = minCompPoint(components[boardType]) + [0, 0, pcbHeight];
+function componentsDimensions(boardType = UNO) = maxCompPoint(components[boardType]) - minCompPoint(components[boardType]);
+//Determine the maximum point in a list of points
+function maxPoint( list, index = 0, maximum = [-10000000, -10000000, -10000000] ) = 
+  index >= len(list) ? maximum : maxPoint( list, index + 1, maxVec( maximum, list[index] ));
