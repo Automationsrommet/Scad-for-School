@@ -20,17 +20,23 @@ husbredde=80;
 kolonner=3;
 rader=1;
 
-//hus();
+// hus();
 //kilen();
-//knappene();
+///knappene();
 //overgang();
 //diodekort();
-deksel();
-//sokkel();
-
+//deksel();
+sokkel();
+//staker();
 //translate([1.5-5,-0.5,-20])rotate([0,0,90]) hardware();
 //translate([-30-5,26,-30])rotate([0,0,-90])arduino();
-
+module staker(){
+translate([-15,24,-21])cube([4.2,4.2,20],center=true);
+translate([-15,-24,-21])cube([4.2,4.2,20],center=true);
+translate([36,-19,-21])cube([4.2,4.2,20],center=true);
+translate([36,10,-21])cube([4.2,4.2,20],center=true);
+translate([0,0,1])cube([200,200,20],center=true);
+}
 module diodekort(){
 translate([0,0,26]){
 difference(){
@@ -96,6 +102,11 @@ translate([-35,-19,-23])cube([10,11,12],center=true);
 minkowski(){
 translate([-35,10.8,-23.9])cube([20,13,10],center=true);
 sphere(0.5,$fn=5);
+}
+staker();
+minkowski(){
+deksel();
+sphere(1,$fn=4);
 }
 }
 }
@@ -173,6 +184,9 @@ linear_extrude(2)
 rotate([0,0,180])text(str(i),6);
 }
 }
+}
+module pinne (){
+color("silver")cube([pinnebredde,pinnebredde,pinnehoyde],center=true);
 }
 module lyser(){
 for (i=[-1:1:1]){
