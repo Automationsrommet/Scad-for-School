@@ -1,0 +1,86 @@
+const int knapp1 = 7;  
+const int knapp2 =9;
+const int knapp3 =10;
+
+const int lys1 = 13;
+const int lys2 = 12;
+const int lys3 = 11;
+
+int teller1 = 0; 
+int teller2 = 0; 
+int teller3 = 0; 
+int knappestatus1 = 0;
+int knappestatus2 = 0;
+int knappestatus3 = 0;
+int forrigeknappestatus1 = 0;
+int forrigeknappestatus2 = 0;
+int forrigeknappestatus3 = 0;
+
+void setup() {
+  pinMode(knapp1, INPUT_PULLUP);
+  pinMode(knapp2, INPUT_PULLUP);
+  pinMode(knapp3, INPUT_PULLUP);
+  pinMode(lys1, OUTPUT);
+  pinMode(lys2, OUTPUT);
+  pinMode(lys3, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  
+  knappestatus1 = digitalRead(knapp1); 
+  knappestatus2 = digitalRead(knapp2);
+  knappestatus3 = digitalRead(knapp3);
+
+  if (knappestatus1 != forrigeknappestatus1) {
+    
+    if (knappestatus1 == LOW) {      
+      teller1++;      
+      Serial.print("Teller 1 er ");
+      Serial.println(teller1);
+      if (teller1 == 1){
+      Serial.println("Knapp1");
+      digitalWrite(lys1, HIGH);
+      }   else {
+       digitalWrite(lys1, LOW);
+    }
+    } 
+    delay(50);
+  }
+  if (knappestatus2 != forrigeknappestatus2) {
+    
+    if (knappestatus2 == LOW) {      
+      teller2++;
+       Serial.print("Teller 2 er ");
+      Serial.println(teller2);
+      if (teller2 == 1){
+      Serial.println("Knapp2");
+      digitalWrite(lys2, HIGH);
+      }   else {
+       digitalWrite(lys2, LOW);
+    }
+    }
+    delay(50);
+  }
+  if (knappestatus3 != forrigeknappestatus3) {
+    
+    if (knappestatus3 == LOW) {      
+      teller3++;
+       Serial.print("Teller 3 er ");
+      Serial.println(teller3);
+      if (teller3 == 1){
+      Serial.println("Knapp3");
+      digitalWrite(lys3, HIGH);
+      }   else {
+       digitalWrite(lys3, LOW);
+    }
+    }
+    delay(50);
+  }
+  forrigeknappestatus1 = knappestatus1;
+  forrigeknappestatus2 = knappestatus2;
+  forrigeknappestatus3 = knappestatus3;
+  if (teller1 == 2) {teller1 = 0;}
+  if (teller2 == 2) {teller2 = 0;}
+  if (teller3 == 2) {teller3 = 0;}
+ }
