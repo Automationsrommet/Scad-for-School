@@ -1,7 +1,7 @@
 //Mikrokontroller-styrt beltebil med kode fra christopher bartlett.
 
 // Rekkefølgen er viktig når vi monterer tingene på bilen.
-// Begynn med å skru toppramme fast i bunnramme. Her er det kanskje nok å bruke de skrå skruene.
+// Begynn med å skru toppramme fast i bunnramme (hvis ikke de to er printet sammen). Her er det kanskje nok å bruke de skrå skruene.
 // Så er det hjulene sin tur. Vi bruker korte bremserør i det printede hjulet. Varmtlim som gjengelim.
 // Batteripakken er neste, og da må vi ha med alle ledninger slik at de kan tilkobles senere.
 // Etter det kan vi legge ned elektronikken, pico W og H-broen loddet sammen i en flat pakke som passer i de to rommene.
