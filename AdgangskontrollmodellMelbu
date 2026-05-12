@@ -9,10 +9,6 @@ $fn=60;
 
 //todo: innvendig for
 //      braketter til magnetkontakt
-//      feste til rekkeklemme
-//      Skruer rekkeklemmefeste
-//      rense opp inni
-//      støtter inni
 //      opp på github
 //      dørlås
 //      tekst
@@ -29,9 +25,16 @@ rekkeklemme(margin);
 translate([10+15,0+15,-20+2])
 rotate([64,0,180-45])
 cube([100,68,45],center=true);
+
 }
-translate([8,0,-74])
+difference(){
+translate([9,-1,-74])
 rotate([0,0,-45])cube([68,30,32],center=true);
+translate([9-20,-1+20,-95])cylinder(37,2,2,center=false);
+translate([9+20,-1-20,-95])cylinder(37,2,2,center=false);
+translate([9-20,-1+20,-95])cylinder(10,10,2,center=false);
+translate([9+20,-1-20,-95])cylinder(10,10,2,center=false);
+}
 }
 //husinni();
 //inventar();
@@ -39,11 +42,18 @@ rotate([0,0,-45])cube([68,30,32],center=true);
 //hengsel();
 module skall(){
 difference(){
+
 color("grey")hus();
+
 husinni();
 inventar(margin);
 translate([0,0,-20])cylinder(98,45,45,center=true);
 translate([0,0,181.5])hus();
+
+translate([9-20,-1+20,-95])cylinder(37,2,2,center=false);
+translate([9+20,-1-20,-95])cylinder(37,2,2,center=false);
+translate([9-20,-1+20,-95])cylinder(10,10,2,center=false);
+translate([9+20,-1-20,-95])cylinder(10,10,2,center=false);
 }
 translate([-44,35,-83])cube([2,2,17],center=true);
 translate([-44,-35,-83])cube([2,2,17],center=true);
@@ -65,6 +75,14 @@ translate([-13,25,78.5])
 rotate([0,45,0])cube([2,2,30],center=true);
 translate([-13,-25,78.5])
 rotate([0,45,0])cube([2,2,30],center=true);
+
+translate([33,-27,58.5])
+rotate([0,45,65])cube([2,2,40],center=true);
+translate([40,-20,73])cube([2,2,16],center=false);
+translate([40,5,73])cube([2,2,16],center=false);
+translate([40,30,73])cube([2,2,16],center=false);
+translate([-27,49,41])
+rotate([0,45,90])cube([2,2,30],center=true);
 }
 module inventar(tall){
 translate([0,-bredde/2-3,0])rotate([0,0,180])telefon(tall);
@@ -151,9 +169,12 @@ module doer(){
 }
 module hus(){
 difference(){
+union(){
 minkowski(){
 cube([bredde-avrund,dybde-avrund,hoyde-avrund],center=true);
 rotate([45,45,45])cube(avrund,center=true);
+}
+hengsel();
 }
 difference(){
 translate([30,50,0])
@@ -165,7 +186,6 @@ rotate([45,45,45])cube(avrund,center=true);
 translate([10,0,-20])
 rotate([0,0,180-45])rekkeklemme(5);
 }
-translate([50,-00,73])cube([20,60,10],center=true);
 }
 
 module husinni(){
@@ -177,6 +197,7 @@ rotate([45,45,45])cube(avrund-1,center=true);
 translate([10,0,-20])
 rotate([0,0,180-45])rekkeklemme(5);
 inventar(margin+vegg);
+translate([50,20,73])cube([25,80,10],center=true);
 }
 }
 
