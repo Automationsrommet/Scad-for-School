@@ -1,0 +1,228 @@
+//parameter øverst
+hoyde=180;
+bredde=120;
+dybde=120;
+avrund=10;
+vegg=4;
+margin=0.5;
+$fn=60;
+
+//todo: innvendig for
+//      braketter til magnetkontakt
+//      feste til rekkeklemme
+//      Skruer rekkeklemmefeste
+//      rense opp inni
+//      opp på github
+//      rense innerstusser
+
+skall();
+mobel();
+module mobel(){
+difference(){
+translate([10,0,-20])
+rotate([0,0,180-45])
+rekkeklemme(vegg);
+translate([10,0,-20])
+rotate([0,0,180-45])
+rekkeklemme(margin);
+translate([10+13,0+13,-20+2])
+rotate([58,0,180-45])
+cube([100,58,45],center=true);
+}
+translate([8,0,-74])
+rotate([0,0,-45])cube([68,30,32],center=true);
+}
+//husinni();
+//inventar();
+//doer();
+//hengsel();
+module skall(){
+difference(){
+color("grey")hus();
+husinni();
+inventar(margin);
+}
+}
+module inventar(tall){
+translate([0,-bredde/2-3,0])rotate([0,0,180])telefon(tall);
+translate([-20,bredde/2-25/2,0])rotate([0,0,90])sluttstykke(tall);
+translate([bredde/2-12,20,hoyde/2-20])rotate([180,0,-90])magnetkontakt(tall);
+translate([-bredde/2+35,0,hoyde/2-30])rotate([0,-90,0])buzzer(tall);
+translate([-bredde/2+13,0,-30])rotate([90,0,-90])trigger(tall);
+translate([bredde/2-7,-bredde/2+25,-60])rotate([0,90,0])rotate([0,0,12])kontakter(tall);
+translate([10,0,-20])
+rotate([0,0,180-45])rekkeklemme(tall);
+}
+module rekkeklemme(ball){
+intersection(){
+cube([67+ball,33+ball,74+ball],center=true);
+translate([0,4,0])
+rotate([45,0,0])cube(74+ball,center=true);
+}
+}
+module buzzer(hall){
+translate([0,0,-hall])
+cylinder(41+hall,56/2+hall,56/2+hall,center=false);
+for(i=[-1:2:1])
+translate([42/2*i,0,0])rotate([ 180,0,0])cylinder(50,1.5+hall,1.5+hall,center=false);
+}
+module kontakter(nall){
+for(i=[-1:2:1])
+for(j=[-1:1:1])
+translate([j*15,10+i*10-20*cos(j*36),0]){
+cylinder(10+nall,5.5+nall,5.5+nall,center=false);
+translate([0,0,-10-8])
+cylinder(12,7.5,7.5,center=false);
+translate([0,0,-20])
+cylinder(20,3.2+nall,3.2+nall,center=false);}
+}
+module trigger(gall){
+hull(){
+for(i=[-1:2:1])
+for(j=[-1:2:1])
+translate([i*(70/2-4),j*(90/2-4),-gall])cylinder(20+gall,4+gall,4+gall,center=false);
+}
+for(k=[-1:2:1])
+translate([39/2*k,0,0])rotate([ 180,0,0])cylinder(50,2,2,center=false);
+}
+module magnetkontakt(pall){
+translate([0,14/2,0]){
+hull(){
+for(i=[-1:2:1])
+for(j=[-1:2:1])
+translate([i*(66/2-1),j*(14/2-1),0])cylinder(13+pall,1+pall,1+pall,center=false);
+}
+for(k=[-1:2:1])
+translate([57/2*k,0,0])rotate([ 180,0,0])cylinder(20,1.5,1.5,center=false);}
+translate([0,-10.5/2-0.5,0]){
+hull(){
+for(i=[-1:2:1])
+for(j=[-1:2:1])
+translate([i*(66/2-1),j*(10.5/2-1),0])cylinder(13+pall,1+pall,1+pall,center=false);
+}
+for(k=[-1:2:1])
+translate([57/2*k,0,0])rotate([ 180,0,0])cylinder(20,1.5,1.5,center=false);}
+}
+module hengsel(){
+for(i=[-1:2:1]){
+difference(){
+translate([bredde/2+4,-bredde/2+42,i*72])
+rotate([0,90+90-2,0])
+cylinder(25,7,3,center=true,$fn=7);
+translate([bredde/2+4+1.5,-bredde/2+42,i*72])
+rotate([0,0,0])skrue();
+}
+}
+}
+module skrue(){
+translate([0,0,10])cylinder(3,1.5,5,center=false);
+cylinder(25,1.5,1.5,center=true);
+translate([0,0,-10])cylinder(10,2,2,center=true);
+}
+module doer(){
+
+}
+module hus(){
+difference(){
+minkowski(){
+cube([bredde-avrund,dybde-avrund,hoyde-avrund],center=true);
+rotate([45,45,45])cube(avrund,center=true);
+}
+difference(){
+translate([30,50,0])
+minkowski(){
+cube([bredde-avrund-20,dybde-avrund+30,hoyde-avrund-40],center=true);
+rotate([45,45,45])cube(avrund,center=true);
+}
+}
+translate([10,0,-20])
+rotate([0,0,180-45])rekkeklemme(5);
+}
+}
+module husinni(){
+difference(){
+minkowski(){
+cube([bredde-avrund-vegg,dybde-avrund-vegg,hoyde-avrund-vegg],center=true);
+rotate([45,45,45])cube(avrund-1,center=true);
+}
+translate([10,0,-20])
+rotate([0,0,180-45])rekkeklemme(5);
+inventar(margin+vegg);
+}
+}
+
+module telefon(gall){
+    translate([0,-22/2,0])
+    intersection(){
+        cube([50+gall,22+gall,160+gall],center=true);
+        rotate([90,0,0])
+        cylinder(40+gall,150/2+gall,150/2+gall,center=true,$fn=100);
+    }
+    color("white")
+    translate([0,0,150/2-7])
+    cube([30,2,5],center=true);
+    //12 knapper med 4mm mellom
+    for(i=[-1:2:1])
+        for(j=[0:1:5]){
+ translate([i*(13/2+3),0,150/2-10-5-4-j*14])knapp();
+    
+    translate([0,0,123/2*i])rotate([90,0,0])cylinder(50,1.5,1.5,center=false);
+    translate([i*33/2,-22/2,-123/2])rotate([0,180,0])cylinder(50,5,5,center=false);
+    }
+ translate([0,0,-150/2+14])knapp();
+        color("black")
+  translate([0,0,-38]) 
+        rotate([-90,0,0])
+        linear_extrude(2)
+    translate([-38/2,-28/2,0])minkowski(){
+      square([40-2,30-2]);
+      circle(2);
+   }    
+   hull(){
+ for(k=[-1:2:1])
+translate([0,0,k*20])
+rotate([90,0,0])
+cylinder(40,10,10,center=false);
+}
+}
+
+module knapp(){
+    color("silver")
+    rotate([-90,0,0])
+    translate([-11/2,-8/2,0])
+    linear_extrude(3)
+   minkowski(){
+      square([13-2,10-2]);
+      circle(2);
+   } 
+}
+module sluttstykke(mall){
+    difference(){
+    union(){
+  translate([0,3/2,0])
+    cube([30+mall,5+mall,164+mall],center=true);
+  
+    translate([15-10.5,3+30/2,8/2])
+    cube([22+mall,30+mall,93+mall],center=true);  
+    }
+    color("red")
+    translate([-15+9+7.5,7/2,0])
+    cube([15,7,44],center=true);
+   
+    for(i=[-1:2:1])
+    translate([0,0,i*(158/2-7)]){
+    color("red")
+     translate([0,3/2,0])
+    rotate([90,0,0])
+    cylinder(4,2.5,2.5,center=true);
+    
+    color("red")
+        translate([0,-2,0])
+    rotate([90,0,0])
+    sphere(4.5);
+    }
+    }
+    for (j=[-1:2:1])
+    translate([0,0,146/2*j])rotate([-90,0,0])cylinder(40,2,2,center=false);
+
+}
