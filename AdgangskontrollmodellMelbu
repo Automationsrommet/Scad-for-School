@@ -1,5 +1,5 @@
 //parameter øverst
-hoyde=180;
+hoyde=176;
 bredde=120;
 dybde=120;
 avrund=10;
@@ -12,11 +12,12 @@ $fn=60;
 //      feste til rekkeklemme
 //      Skruer rekkeklemmefeste
 //      rense opp inni
+//      støtter inni
 //      opp på github
-//      rense innerstusser
-
+//      dørlås
+//      tekst
 skall();
-mobel();
+//mobel();
 module mobel(){
 difference(){
 translate([10,0,-20])
@@ -25,9 +26,9 @@ rekkeklemme(vegg);
 translate([10,0,-20])
 rotate([0,0,180-45])
 rekkeklemme(margin);
-translate([10+13,0+13,-20+2])
-rotate([58,0,180-45])
-cube([100,58,45],center=true);
+translate([10+15,0+15,-20+2])
+rotate([64,0,180-45])
+cube([100,68,45],center=true);
 }
 translate([8,0,-74])
 rotate([0,0,-45])cube([68,30,32],center=true);
@@ -41,7 +42,29 @@ difference(){
 color("grey")hus();
 husinni();
 inventar(margin);
+translate([0,0,-20])cylinder(98,45,45,center=true);
+translate([0,0,181.5])hus();
 }
+translate([-44,35,-83])cube([2,2,17],center=true);
+translate([-44,-35,-83])cube([2,2,17],center=true);
+translate([-44,0,-83])cube([2,2,17],center=true);
+
+translate([23,-39.5,-83])cube([2,2,17],center=true);
+translate([0,-39.5,-83])cube([2,2,17],center=true);
+translate([-23,-39.5,-83])cube([2,2,17],center=true);
+translate([-35,0,20])
+rotate([0,45,0])cube([2,2,30],center=true);
+translate([-35,15,20])
+rotate([0,45,0])cube([2,2,30],center=true);
+translate([-35,-15,20])
+rotate([0,45,0])cube([2,2,30],center=true);
+
+translate([-13,6,78.5])
+rotate([0,45,0])cube([2,2,30],center=true);
+translate([-13,25,78.5])
+rotate([0,45,0])cube([2,2,30],center=true);
+translate([-13,-25,78.5])
+rotate([0,45,0])cube([2,2,30],center=true);
 }
 module inventar(tall){
 translate([0,-bredde/2-3,0])rotate([0,0,180])telefon(tall);
@@ -61,10 +84,13 @@ rotate([45,0,0])cube(74+ball,center=true);
 }
 }
 module buzzer(hall){
+rotate([0,0,45]){
 translate([0,0,-hall])
 cylinder(41+hall,56/2+hall,56/2+hall,center=false);
 for(i=[-1:2:1])
-translate([42/2*i,0,0])rotate([ 180,0,0])cylinder(50,1.5+hall,1.5+hall,center=false);
+translate([42/2*i,0,0])rotate([ 180,0,0])cylinder(50,1.5-hall,1.5-hall,center=false);
+cube([20,50,100],center=true);
+}
 }
 module kontakter(nall){
 for(i=[-1:2:1])
@@ -72,18 +98,19 @@ for(j=[-1:1:1])
 translate([j*15,10+i*10-20*cos(j*36),0]){
 cylinder(10+nall,5.5+nall,5.5+nall,center=false);
 translate([0,0,-10-8])
-cylinder(12,7.5,7.5,center=false);
-translate([0,0,-20])
-cylinder(20,3.2+nall,3.2+nall,center=false);}
+cylinder(12,7.5-nall-2,7.5-nall,center=false);
+translate([0,0,-20+nall*3])
+cylinder(20,3.2+nall/2,3.2+nall,center=false);}
 }
 module trigger(gall){
 hull(){
 for(i=[-1:2:1])
 for(j=[-1:2:1])
-translate([i*(70/2-4),j*(90/2-4),-gall])cylinder(20+gall,4+gall,4+gall,center=false);
+translate([i*(74/2-4),j*(85/2-4),-gall])cylinder(20+gall,4+gall,4+gall,center=false);
 }
 for(k=[-1:2:1])
 translate([39/2*k,0,0])rotate([ 180,0,0])cylinder(50,2,2,center=false);
+rotate([0,0,30])cube([20,60,100],center=true);
 }
 module magnetkontakt(pall){
 translate([0,14/2,0]){
@@ -138,11 +165,13 @@ rotate([45,45,45])cube(avrund,center=true);
 translate([10,0,-20])
 rotate([0,0,180-45])rekkeklemme(5);
 }
+translate([50,-00,73])cube([20,60,10],center=true);
 }
+
 module husinni(){
 difference(){
 minkowski(){
-cube([bredde-avrund-vegg,dybde-avrund-vegg,hoyde-avrund-vegg],center=true);
+cube([bredde-avrund-vegg-vegg,dybde-avrund-vegg-vegg,hoyde-avrund-vegg-vegg],center=true);
 rotate([45,45,45])cube(avrund-1,center=true);
 }
 translate([10,0,-20])
@@ -207,7 +236,7 @@ module sluttstykke(mall){
     }
     color("red")
     translate([-15+9+7.5,7/2,0])
-    cube([15,7,44],center=true);
+    cube([15,7,45],center=true);
    
     for(i=[-1:2:1])
     translate([0,0,i*(158/2-7)]){
@@ -219,10 +248,13 @@ module sluttstykke(mall){
     color("red")
         translate([0,-2,0])
     rotate([90,0,0])
-    sphere(4.5);
+    sphere(7.5);
+     
     }
     }
     for (j=[-1:2:1])
     translate([0,0,146/2*j])rotate([-90,0,0])cylinder(40,2,2,center=false);
-
+    color("blue")
+    translate([-15+9+7.5,30,0])
+    cube([22,13,80],center=true);
 }
