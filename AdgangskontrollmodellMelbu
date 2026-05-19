@@ -7,50 +7,139 @@ vegg=4;
 margin=0.5;
 $fn=60;
 
-//todo: innvendig for
-//      mer høyde for telefon
-//      braketter til magnetkontakt
-//      opp på github
-//      dørlås
-//      tekst på dør
-//      tekst på møbel
-//      dør
-//      snu magnetskruer
-//      Støtte til braketter for magnetkontakt
-//      plass til alcad-sluttstykke
-//      alternativt møbel for din-skinne
-//      Skruestøtteskinne for din-skinne
+//todo:
 //      større plugger bananplugg
-
+//      Kant av døra
+//      Anpassing av dørstørrelsen
+//      låsetapp lengre ned
+//      støtte til låsetapp
+//      Støtte til magnetbrakett på døra
+//      dinrailklips -2mm og ene hjørnet skjært
+//      symmetrisk avskjær på møbel
+//      grepspor på møbelknott
+//      Tekst på møbel snudd inn.
+//
 
 skall();
 //inventar(0);
-mobel();
+//mobel();
+//mobelklips();
+//mobelknott();
+//doer();
+
+module mobelknott(){
+difference(){
+union(){
+translate([0,0,5])cylinder(7,8,5);
+cylinder(5,7,8);
+}
+cylinder(3,6.4/2,6.4/2,center=false,$fn=6);
+cylinder(20,2,2);
+}
+}
+module mobelklips(){
+difference(){
+hull(){
+for(k=[-1:2:1])
+translate([k*25,0,0])
+rotate([90,0,0])
+cylinder(7,12,12);
+}
+for(l=[-1,-0.75,0.75,1])
+translate([l*25,0,0])
+rotate([90,0,0])
+cylinder(8,1.5,1.5);
+for(m=[-1,-0.75,0.75,1])
+translate([m*25,0,0])
+rotate([90,0,0])
+cylinder(2,3,3);
+}
+}
 module mobel(){
 difference(){
-translate([10,0,-20])
+union(){
+translate([10-19,0-19,-20])
 rotate([0,0,180-45])
-rekkeklemme(vegg);
-translate([10,0,-20])
-rotate([0,0,180-45])
-rekkeklemme(margin);
-translate([10+15,0+15,-20+2])
-rotate([64,0,180-45])
-cube([100,73,45],center=true);
+
+difference(){
+hull(){
+for(k=[-1:2:1])
+translate([k*25,0,0])
+rotate([90,0,0])
+cylinder(8,12,12);
+}
+hull(){
+translate([25,0,0])
+rotate([90,0,0])
+cylinder(8,1.8,1.8);
+translate([25*0.75,0,0])
+rotate([90,0,0])
+cylinder(8,1.8,1.8);
+}
+hull(){
+translate([-25,0,0])
+rotate([90,0,0])
+cylinder(8,1.8,1.8);
+translate([-25*0.75,0,0])
+rotate([90,0,0])
+cylinder(8,1.8,1.8);
+}
+hull(){
+translate([-25,0,0])
+rotate([90,0,0])
+cylinder(3,8,5);
+translate([-25*0.75,0,0])
+rotate([90,0,0])
+cylinder(3,8,5);
+}
+hull(){
+translate([25,0,0])
+rotate([90,0,0])
+cylinder(3,8,5);
+translate([25*0.75,0,0])
+rotate([90,0,0])
+cylinder(3,8,5);
+}
+}
+hull(){
+translate([9-18-15,-1+18-15,-61])rotate([0,0,45])cylinder(32,7,4,center=false);
+translate([9+18-15,-1-18-15,-61])rotate([0,0,45])cylinder(32,7,4,center=false);
+}
+hull(){
+translate([9-19+3,-1+19+3,-63])rotate([0,-85,45])cylinder(32.5,7,5,center=false);
+translate([9+19+3,-1-19+3,-63])rotate([0,-85,45])cylinder(32.5,7,5,center=false);
 }
 difference(){
-translate([9,-1,-74])
-rotate([0,0,-45])cube([68,30,32],center=true);
+
+hull(){
+translate([9-20,-1+20,-90])cylinder(32,10,8,center=false);
+translate([9+20,-1-20,-90])cylinder(32,10,8,center=false);
+}
 translate([9-20,-1+20,-95])cylinder(37,2,2,center=false);
 translate([9+20,-1-20,-95])cylinder(37,2,2,center=false);
 translate([9-20,-1+20,-95])cylinder(10,10,2,center=false);
 translate([9+20,-1-20,-95])cylinder(10,10,2,center=false);
 }
 }
-//husinni();
-//inventar();
-//doer();
-//hengsel();
+translate([10,0,-20])
+rotate([0,0,180-45])
+rekkeklemme(margin*3);
+
+rotate([3,0,57])
+translate([20,74,-50])cube(100,center=true);
+
+translate([20+15-0.5,0-15-0.5,-68])
+rotate([80,0,180-45])
+linear_extrude(2)text("automations",8);
+translate([20+8,0-8,-78])
+rotate([80,0,180-45])
+linear_extrude(2)text("rommet",8);
+translate([20+9+0.5,0-9+0.5,-88])
+rotate([80,0,180-45])
+linear_extrude(2)text("@github",8);
+}
+}
+
 module skall(){
 intersection(){
 cube(180,center=true);
@@ -95,8 +184,17 @@ rotate([0,45,65])cube([2,2,40],center=true);
 translate([40,-20,73])cube([2,2,16],center=false);
 translate([40,5,73])cube([2,2,16],center=false);
 translate([40,30,73])cube([2,2,16],center=false);
-translate([-27,49,41])
+translate([-27,49,43])
 rotate([0,45,90])cube([2,2,30],center=true);
+translate([-53,0,3])
+rotate([0,-45,0])cube([2,2,28],center=true);
+
+translate([50,1,62])
+rotate([0,-45,0])cube([2,2,28],center=true);
+translate([50,30,62])
+rotate([0,-45,0])cube([2,2,28],center=true);
+translate([50,60,62])
+rotate([0,-45,0])cube([2,2,28],center=true);
 
 translate([58,58,-73])cube([2,2,155],center=false);
 translate([30,58,-73])cube([2,2,155],center=false);
@@ -109,7 +207,7 @@ translate([58,-0,-73])cube([2,2,155],center=false);
 }
 module inventar(tall){
 translate([0,-bredde/2-3,0])rotate([0,0,180])telefon(tall);
-translate([-20,bredde/2-25/2,0])rotate([0,0,90])sluttstykke(tall);
+translate([-20,bredde/2-25/2,0])rotate([0,0,90])sluttstykkeAlcad(tall);
 translate([bredde/2-12,20,hoyde/2-20])rotate([180,0,-90])magnetkontakt(tall);
 translate([-bredde/2+35,0,hoyde/2-30])rotate([0,-90,0])buzzer(tall);
 translate([-bredde/2+13,0,-30])rotate([90,0,-90])trigger(tall);
@@ -188,7 +286,72 @@ cylinder(25,1.5,1.5,center=true);
 translate([0,0,-10])cylinder(10,2,2,center=true);
 }
 module doer(){
+difference(){
+intersection(){
+union(){
+minkowski(){
+cube([bredde-avrund,dybde-avrund,hoyde-avrund],center=true);
+rotate([45,45,45])cube(avrund-1,center=true);
+}
+hengsel();
+}
+translate([30,50,0])
+minkowski(){
+cube([bredde-avrund-20,dybde-avrund+30,hoyde-avrund-40],center=true);
+rotate([45,45,45])cube(avrund,center=true);
+}
+}
+husinni();
+translate([48,15,50])
+rotate([0,0,90])
+magnetkontakt(2);
+translate([48,15,65])
+rotate([0,0,90])
+magnetkontakt(2);
+cube([80,80,180],center=true);
+translate([28,0,-40])
+cube([60,60,120],center=true);
+translate([28,28,50])
+cube([60,60,50],center=true);
+translate([-28,28,50])
+cube([60,60,64],center=true);
+translate([-28,28,-50])
+cube([60,60,54],center=true);
+translate([-28,0,0])
+cube([80,92,54],center=true);
+translate([61,-25,25])
+rotate([90,0,90])
+linear_extrude(2)text("Adgangs",15);
+translate([61,-25,0])
+rotate([90,0,90])
+linear_extrude(2)text("kontroll",15);
+translate([61,-25,-25])
+rotate([90,0,90])
+linear_extrude(2)text("modell",15);
 
+translate([54,61,40])
+rotate([90,0,180])
+linear_extrude(2)text("VG2",15);
+translate([54,61,20])
+rotate([90,0,180])
+linear_extrude(2)text("Elenergi",12);
+translate([54,61,0])
+rotate([90,0,180])
+linear_extrude(2)text("og EKOM",12);
+translate([54,61,-25])
+rotate([90,0,180])
+linear_extrude(2)text("Elev 1",15);
+
+}
+
+difference(){
+translate([52,15,50])cube([13,80,3],center=true);
+translate([48,15,51])
+rotate([0,0,90])
+magnetkontakt(2);
+}
+translate([-26,50,-3])
+cube([8,8,40],center=true);
 }
 module hus(){
 difference(){
@@ -229,7 +392,7 @@ module telefon(gall){
     intersection(){
         cube([50+gall,22+gall,160+gall],center=true);
         rotate([90,0,0])
-        cylinder(40+gall,150/2+gall,150/2+gall,center=true,$fn=100);
+        cylinder(40+gall,158/2+gall,158/2+gall,center=true,$fn=100);
     }
     color("white")
     translate([0,0,150/2-7])
@@ -269,7 +432,7 @@ module knapp(){
       circle(2);
    } 
 }
-module sluttstykke(mall){
+module sluttstykkeGolmar(mall){
     difference(){
     union(){
   translate([0,3/2,0])
@@ -281,6 +444,38 @@ module sluttstykke(mall){
     color("red")
     translate([-15+9+7.5,7/2,0])
     cube([15,7,45],center=true);
+   
+    for(i=[-1:2:1])
+    translate([0,0,i*(158/2-7)]){
+    color("red")
+     translate([0,3/2,0])
+    rotate([90,0,0])
+    cylinder(4,2.5,2.5,center=true);
+    
+    color("red")
+        translate([0,-2,0])
+    rotate([90,0,0])
+    sphere(7.5);
+     
+    }
+    }
+    for (j=[-1:2:1])
+    translate([0,0,146/2*j])rotate([-90,0,0])cylinder(40,2,2,center=false);
+    color("blue")
+    translate([-15+9+7.5,30,0])
+    cube([22,13,80],center=true);
+}
+module sluttstykkeAlcad(mall){
+    difference(){
+    union(){
+  translate([0,3/2,0])
+    cube([30+mall,5+mall,164+mall],center=true);
+    translate([15-10.5,3+30/2,0])
+    cube([22+mall,30+mall,107+mall],center=true);  
+    }
+    //color("red")
+    //translate([-15+9+7.5,7/2,0])
+    //cube([15,7,45],center=true);
    
     for(i=[-1:2:1])
     translate([0,0,i*(158/2-7)]){
